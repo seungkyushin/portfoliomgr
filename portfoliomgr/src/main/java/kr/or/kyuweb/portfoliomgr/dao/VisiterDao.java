@@ -2,12 +2,14 @@ package kr.or.kyuweb.portfoliomgr.dao;
 
 import static kr.or.kyuweb.portfoliomgr.sql.VisiterSql.*;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -22,15 +24,15 @@ import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 public class VisiterDao {
 	
 	
-	 NamedParameterJdbcTemplate jdbc;
-	 SimpleJdbcInsert insertAction;
-	 RowMapper<VisiterDto> rowMapper = new BeanPropertyRowMapper<>(VisiterDto.class);
+	 private NamedParameterJdbcTemplate jdbc;
+	 private SimpleJdbcInsert insertAction;
+	 private RowMapper<VisiterDto> rowMapper = new BeanPropertyRowMapper<>(VisiterDto.class);
 	 
 	 
 
 	 public VisiterDao(DataSource dataSource) {
-		 jdbc = new NamedParameterJdbcTemplate(dataSource);
-		 insertAction = new SimpleJdbcInsert(dataSource)
+		 this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		 this.insertAction = new SimpleJdbcInsert(dataSource)
 				 .withTableName("visiter")
 				 .usingGeneratedKeyColumns("id");
 		 
@@ -39,6 +41,22 @@ public class VisiterDao {
 	 public List<VisiterDto> selectAll() {
 		  return jdbc.query(SELECT_ALL,rowMapper);
 	 }
+	 
+	 public VisiterDto selectByEmail(String email){
+		 Map<String,String> paramMap = new HashMap<>();
+		 paramMap.put("email", email);
+		 
+		 
+		 try {
+			 	return jdbc.queryForObject(SELECT_BY_EMAIL, paramMap, rowMapper);
+		 }catch(EmptyResultDataAccessException e)
+		 {
+			 return null;
+		 }
+		 
+		 
+	 }
+	 
 	 
 	 public int insert(VisiterDto data) {
 		 
@@ -52,6 +70,16 @@ public class VisiterDao {
 		 paramMap.put("email", email);
 		return 0;
 	 }
+	 
+	 public int updateLastLoginTime(String email,String lastLoinDate) {
+		 
+		 Map<String,String> paramMap = new HashMap<>();
+		 paramMap.put("email", email);
+		 paramMap.put("lastLoginDate", lastLoinDate);
+		 
+		 return jdbc.update(UPDATE_LAST_LOGIN_TIME, paramMap);
+	 }
+	
 	
 
 }

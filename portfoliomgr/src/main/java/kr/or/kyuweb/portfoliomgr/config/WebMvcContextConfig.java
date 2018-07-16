@@ -18,7 +18,6 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		System.out.println("WebMvcContextConfig : 리소스 핸들러 설정");
         registry.addResourceHandler("/assets/css/**").addResourceLocations("/assets/css/").setCachePeriod(31556926);
         registry.addResourceHandler("/assets/img/**").addResourceLocations("/assets/img/").setCachePeriod(31556926);
         registry.addResourceHandler("/assets//js/**").addResourceLocations("/assets/js/").setCachePeriod(31556926);
@@ -26,7 +25,6 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		System.out.println("WebMvcContextConfig : 뷰 컨트롤 설정");
 		registry.addViewController("/main").setViewName("main");
 		registry.addViewController("/description").setViewName("description");
 	
@@ -35,7 +33,6 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 
 	   @Override
 	    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-	    	System.out.println("WebMvcContextConfiguration : configureDefaultServletHandling");
 	    	configurer.enable();
 	    }
 	

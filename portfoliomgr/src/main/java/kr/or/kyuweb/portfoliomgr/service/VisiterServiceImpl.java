@@ -1,5 +1,7 @@
 package kr.or.kyuweb.portfoliomgr.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +17,36 @@ import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 public class VisiterServiceImpl implements VisiterService{
 	
 	@Autowired
-	VisiterDao visiterDao; 
+	private VisiterDao visiterDao; 
 
 	@Autowired
-	LogDao logDao; 
+	private LogDao logDao; 
 	
-	@Override
-	@Transactional(readOnly=false)
-	public int add(VisiterDto data) {
-		
-		int result = visiterDao.insert(data);
+	
+	private  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+	
+	public void insertLog(String type, String Description) {
 		
 		LogDto log = new LogDto();
-		log.setType("database");
-		log.setDescription("방문자 가입 완료 : " + data.getEmail());
-		log.setCreateDate(new Date());
+		log.setType(type);
+		log.setDescription(Description);
+		log.setCreateDate(dateFormat.format(new Date()));
 		
 		logDao.insert(log);
+		
+	}
+	
+	@Override
+	
+	public int add(VisiterDto data) {
+		
+		DateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		data.setCreateDate(dateFormat.format(new Date()));
+		
+		int result = visiterDao.insert(data);
+
+		insertLog("info","새로 가입 하였습니다. " + data.getEmail());
 		
 		return result;
 	}
@@ -43,8 +58,23 @@ public class VisiterServiceImpl implements VisiterService{
 	}
 
 	@Override
-	public boolean checkEmail(String email) {
+	public boolean checkLogin(String email,String password) {
 		// TODO Auto-generated method stub
+		
+		
+		VisiterDto visiter = visiterDao.selectByEmail(email);
+		
+		if(visiter.getPassword().equals(password) == true) {		
+
+			//< 마지막 로그인 갱신
+			visiterDao.updateLastLoginTime(visiter.getEmail(), dateFormat.format(new Date()));
+			//< 로그
+			insertLog("info", visiter.getEmail() + "님이 로그인 하셨습니다.");
+			
+			return true;
+			
+		}
+		
 		return false;
 	}
 

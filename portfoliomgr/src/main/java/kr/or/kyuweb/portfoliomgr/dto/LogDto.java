@@ -5,7 +5,7 @@ import java.util.Date;
 public class LogDto {
 
 	private int id;
-	private Date createDate;
+	private String createDate;
 	private String type;
 	private String description;
 	public int getId() {
@@ -14,10 +14,10 @@ public class LogDto {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 	public String getType() {

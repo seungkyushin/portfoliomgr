@@ -1,6 +1,6 @@
 package kr.or.kyuweb.portfoliomgr.dto;
 
-import java.sql.Date;
+
 
 public class VisiterDto {
 	
@@ -9,8 +9,8 @@ public class VisiterDto {
 	private String password;
 	private String email;
 	private String organization;
-	private Date createDate;
-	private Date lastLoginDate;
+	private String createDate;
+	private String lastLoginDate;
 	public int getId() {
 		return id;
 	}
@@ -41,16 +41,16 @@ public class VisiterDto {
 	public void setOrganization(String organization) {
 		this.organization = organization;
 	}
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
-	public Date getLastLoginDate() {
+	public String getLastLoginDate() {
 		return lastLoginDate;
 	}
-	public void setLastLoginDate(Date lastLoginDate) {
+	public void setLastLoginDate(String lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
 	}
 	@Override

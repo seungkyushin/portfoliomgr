@@ -15,22 +15,21 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import kr.or.kyuweb.portfoliomgr.dto.LogDto;
-import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 
 @Repository
 public class LogDao {
 	
 
-	 NamedParameterJdbcTemplate jdbc;
-	 SimpleJdbcInsert insertAction;
-	 RowMapper<LogDto> rowMapper = new BeanPropertyRowMapper<>(LogDto.class);
+	private NamedParameterJdbcTemplate jdbc;
+	private SimpleJdbcInsert insertAction;
+	private RowMapper<LogDto> rowMapper = new BeanPropertyRowMapper<>(LogDto.class);
 	 
 	 
 
 	 public LogDao(DataSource dataSource) {
-		 jdbc = new NamedParameterJdbcTemplate(dataSource);
-		 insertAction = new SimpleJdbcInsert(dataSource)
-				 .withTableName("visiter")
+		 this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		 this.insertAction = new SimpleJdbcInsert(dataSource)
+				 .withTableName("log")
 				 .usingGeneratedKeyColumns("id");
 		 
 	 }

@@ -1,6 +1,10 @@
 package kr.or.kyuweb.portfoliomgr.controller;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,17 +15,17 @@ import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 import kr.or.kyuweb.portfoliomgr.service.VisiterService;
 
 @Controller
-public class AccountPage {
+public class JoinController {
 
 	@Autowired
 	VisiterService visiterService;
 	
-	@GetMapping(path="/account")
-	public String pagemove() {
-		return "account";
+	@GetMapping(path="/join")
+	public String showpage() {
+		return "join";
 	}
 	
-	@PostMapping(path="/addVisiter")
+	@PostMapping(path="/addvisiter")
 	public String addVisiter( @RequestParam(name="name") String name,
 			@RequestParam(name="email") String email,
 			@RequestParam(name="password") String password,

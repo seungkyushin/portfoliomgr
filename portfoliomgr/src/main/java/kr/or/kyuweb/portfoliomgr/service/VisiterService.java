@@ -9,6 +9,6 @@ public interface VisiterService {
 
 	public int add(VisiterDto data);
 	public int delete(VisiterDto data);
-	public boolean checkEmail(String email);
+	public boolean checkLogin(String email, String password);
 	
 }
