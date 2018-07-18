@@ -14,6 +14,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="assets/css/action.css" />
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
@@ -25,12 +26,13 @@
 						<header class="major">
 							<h2>방문자 가입</h2>
                             <p>홈페이지 관리자는 해당 정보를 매일 삭제 합니다.</p>
-                            <p>빈칸없이 모두 작성해주시길 바랍니다.</p>
+                            <p>형식 및 빈칸없이 모두 알맞게 작성해주시길 바랍니다.</p>
+                            <p id="checkmsg"></p>
 						</header>
 
 						<!-- Form -->
 							<section>
-				    				<form method="post" action="./addVisiter">
+				    				<form id="formData" method="post" action="./addvisiter">
 									<div class="row gtr-uniform gtr-50">
 
                                         <div class="col-4 col-12-xsmall"></div> 
@@ -44,6 +46,7 @@
                                         <div class="col-4 col-12-xsmall"></div> 
 										<div class="col-4 col-12-xsmall">
 											<input type="email" name="email" id="email" value="" placeholder="이메일" />
+                                        	
                                         </div>
                                         <div class="col-4 col-12-xsmall"></div> 
                                         
@@ -64,7 +67,7 @@
                                     <div class="col-5 col-4-medium col-12-xsmall"></div>
                                     <div class="col-2 col-4-medium col-12-xsmall">
 										<ul class="actions stacked">
-											<li><input type="submit" class="button primary fit" value="가입"></li>
+											<li><input type="button" id="sendBtn" class="button primary fit" value="가입"></li>
 											</ul>
             
 								</form>
@@ -72,6 +75,63 @@
 					</div>
 				</div>
 		</div>
+		
+		<script>
+		window.addEventListener("DOMContentLoaded",function(){
+			
+			document.querySelector("#sendBtn").addEventListener("click",function(event){
+				
+				event.preventDefault();
+				
+				if( isCheckForm() == true )
+				 {
+					document.querySelector("#formData").submit();
+				 }
+	  
+			});
+
+		});
+		function isCheckForm(){
+						
+			var name = document.querySelector("#name");
+			var password =  document.querySelector("#password");
+			var email = document.querySelector("#email");
+			var checkMsg = document.querySelector("#checkmsg");
+			var result = true;
+			
+			checkMsg.innerHTML = "";
+			
+			if( name.value.length <= 0 ){
+				checkMsg.innerHTML += " [<strong style='color:#e44c65'>이름</strong>] "
+				startAnimation("#name","shake");
+				result = false;
+			}
+			
+			if( password.value.length <= 0 ){
+				checkMsg.innerHTML += " [<strong style='color:#e44c65'>비밀번호</strong>] ";
+				startAnimation("#password","shake");
+				result = false;
+			}
+			
+					
+			if( email.value.length <= 0 || email.value.match(/\w@\w.\w/) == null)
+			{
+				checkMsg.innerHTML += " [<strong style='color:#e44c65'>이메일</strong>] ";
+				startAnimation("#email","shake");
+				result = false;
+			}
+
+			checkMsg.innerHTML += "를 확인해 주세요!";
+			
+			return result;
+		}
+		
+		function startAnimation(elementName, type){
+			$(elementName).removeClass().addClass(type + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+			      $(this).removeClass();
+			    });
+		}
+		</script>
 	</body>
 </html>
 

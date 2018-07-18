@@ -64,7 +64,7 @@ public class VisiterServiceImpl implements VisiterService{
 		
 		VisiterDto visiter = visiterDao.selectByEmail(email);
 		
-		if(visiter.getPassword().equals(password) == true) {		
+		if(visiter != null && visiter.getPassword().equals(password) == true) {		
 
 			//< 마지막 로그인 갱신
 			visiterDao.updateLastLoginTime(visiter.getEmail(), dateFormat.format(new Date()));

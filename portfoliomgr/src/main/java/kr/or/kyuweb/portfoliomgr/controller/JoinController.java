@@ -31,16 +31,17 @@ public class JoinController {
 			@RequestParam(name="password") String password,
 			@RequestParam(name="organization") String organization){
 		System.out.println("ViewPageController : /addVisiter");
-		
+
 		VisiterDto visiter = new VisiterDto();
 		
 		visiter.setName(name);
 		visiter.setEmail(email);
 		visiter.setPassword(password);
+		
+		if("".equals(organization) == true)
+			organization = "없음";
+		
 		visiter.setOrganization(organization);
-		
-		System.out.println("data :" + visiter);
-		
 		visiterService.add(visiter);
 		
 		return "main";
