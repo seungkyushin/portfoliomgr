@@ -10,9 +10,10 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/action.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 	</head>
 	<body class="is-preload landing">
-		<div id="page-wrapper">
+		<div id="main-page-wrapper">
              
 		
 			<!-- Banner -->
@@ -29,7 +30,7 @@
 				</section>
 
 			<!-- One -->
-				<section id="one" class="spotlight style1 bottom">
+		<section id="one" class="spotlight style1 bottom">
 					<span class="image fit main"><img src="images/pic02.jpg" alt="" /></span>
 					<div class="content">
 						<div class="container">
@@ -52,25 +53,25 @@
 						</div>
 					</div>
 					<a href="#two" class="goto-next scrolly">Next</a>
-				</section>
+				</section> 
 
 			<!-- Two -->
 				<section id="two" class="spotlight style2 right">
-					<span class="image fit main"><img src="images/pic03.jpg" alt="" /></span>
+					<span class="image fit main"><img src="images/todo.gif" alt="" /></span>
 					<div class="content">
 						<header>
-							<h2>Interdum amet non magna accumsan</h2>
-							<p>Nunc commodo accumsan eget id nisi eu col volutpat magna</p>
+							<h2>NAME</h2>
+							<p>SUB DESCRIPTION</p>
 						</header>
-						<p>Feugiat accumsan lorem eu ac lorem amet ac arcu phasellus tortor enim mi mi nisi praesent adipiscing. Integer mi sed nascetur cep aliquet augue varius tempus lobortis porttitor lorem et accumsan consequat adipiscing lorem.</p>
+						<p>DESCRIPTION</p>
 						<ul class="actions">
-							<li><a href="#" class="button">Learn More</a></li>
+							<li><a href="#" class="button">자세히 보기</a></li>
 						</ul>
 					</div>
 					<a href="#three" class="goto-next scrolly">Next</a>
 				</section>
-
-			<!-- Three -->
+<!-- 
+			Three
 				<section id="three" class="spotlight style3 left">
 					<span class="image fit main bottom"><img src="images/pic04.jpg" alt="" /></span>
 					<div class="content">
@@ -86,7 +87,7 @@
 					<a href="#four" class="goto-next scrolly">Next</a>
 				</section>
 
-			<!-- Four -->
+			Four
 				<section id="four" class="wrapper style1 special fade-up">
 					<div class="container">
 						<header class="major">
@@ -135,7 +136,7 @@
 					</div>
 				</section>
 
-			<!-- Five -->
+			Five
 				<section id="five" class="wrapper style2 special fade">
 					<div class="container">
 						<header>
@@ -149,7 +150,7 @@
 							</div>
 						</form>
 					</div>
-				</section>
+				</section> -->
 
 			
 
@@ -164,6 +165,43 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			
+			<script>
+			window.addEventListener("DOMContentLoaded",function(){
+				
+				$.ajax({
+					type : "POST",
+					url : "./api/project",
+					success : function(data){
+						setProject(data);
+					},
+					error : function(){
+						console.log("에러");
+					}
+				});
+				
+			});
+			
+			function setProject(responseData){
+		
+				
+			
+				responseData.projectList.forEach(function(v){
+					var section = document.querySelector("#two");
+					
+					section.querySelector(".image.fit.main").innerHTML = '<img src=' + v.image + 'alt="" />';
+					section.querySelector(".content").innerHTML = 
+						'<header> <h2>' + v.name + '</h2> <p>' + v.subdescription + '</p> </header>'
+						+ '<p>' + v.description + '</p>'
+						+ '<ul class="actions">' +
+							'<li><a href="' +v.action+ '" class="button">자세히 보기</a></li></ul>';
+						
+					
+				});
+			
+				 
+			}
+			</script>
 			
 	</body>
 </html>

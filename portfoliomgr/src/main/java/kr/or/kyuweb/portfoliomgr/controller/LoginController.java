@@ -1,6 +1,9 @@
 package kr.or.kyuweb.portfoliomgr.controller;
 
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +31,17 @@ public class LoginController {
 	}
 	
 	@GetMapping(path="/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session,
+			HttpServletRequest req,
+			HttpServletResponse res) {
 		
 		session.invalidate();
+		Cookie[] cookies = req.getCookies();
+		for(int i = 0 ; i<cookies.length; i++){            
+			cookies[i].setMaxAge(0);                        
+			res.addCookie(cookies[i]);     
+			}
 
-		
 		return "main";
 	}
 	
@@ -40,8 +49,9 @@ public class LoginController {
 	public String loginCheck(@RequestParam(name="email") String email ,
 			@RequestParam(name="password") String password,
 			HttpSession session,
-			RedirectAttributes redirectAttr) {
-		
+			RedirectAttributes redirectAttr,
+			HttpServletResponse res) {
+	
 		
 		if( session.isNew() == true ) {
 			System.out.println("sesstion true");
@@ -53,7 +63,12 @@ public class LoginController {
 		if( visiterService.checkLogin(email, password) == true ) {
 			
 			session.setAttribute("email", email);
-			
+				
+			Cookie info = new Cookie("email", email);    // 쿠키를 생성한다. 이름:testCookie, 값 : Hello Cookie
+			info.setMaxAge(60*60);                                 // 쿠키의 유효기간을 365일로 설정한다.
+			info.setPath("/");
+			res.addCookie(info);   
+
 			return "main";
 
 		}else {
