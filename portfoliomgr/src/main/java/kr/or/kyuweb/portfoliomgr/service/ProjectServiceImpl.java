@@ -23,7 +23,7 @@ public class ProjectServiceImpl implements ProjectService{
 	FileInfoDao fileInfoDao;
 	
 	@Override
-	public List<Map<String, Object>> getProjectList() {
+	public List<Map<String, Object>> getProjectList(int id) {
 		
 		List<ProjectDto> projectDto = projectDao.selectAll();
 		List<Map<String, Object>> resultList = new ArrayList<>();
@@ -46,5 +46,6 @@ public class ProjectServiceImpl implements ProjectService{
 		
 		return resultList;
 	}
+
 
 }

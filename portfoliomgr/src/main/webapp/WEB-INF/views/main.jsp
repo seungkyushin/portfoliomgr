@@ -170,7 +170,7 @@
 			window.addEventListener("DOMContentLoaded",function(){
 				
 				$.ajax({
-					type : "POST",
+					type : "GET",
 					url : "./api/project",
 					success : function(data){
 						setProject(data);

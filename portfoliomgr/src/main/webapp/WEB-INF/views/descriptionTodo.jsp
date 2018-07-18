@@ -15,26 +15,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
 
 	   			<!-- Main -->
 				<div id="main" class="wrapper style1">
-					<div class="container">
-						<header class="major">
-							<h2>TODO LIST</h2>
-                            <p> </p>
-                           
-						</header>
-
-							<span class="image fit main"><img src="images/todo.gif" alt="" /></span>
-
-					<section >
-						<div class="content">
-						
+					<!--  -->
+				</div>		
 				
-					<div class="review_box">
+					<div class="container">
+						<div class="review_box">
 							<h2>User Comment</h2>
 						<div class="short_review_area">
 							<div class="grade_area">
@@ -51,23 +43,13 @@
 						<p class="guide">
 							<span> * 실제 방문한 사용자가 남긴 평가입니다.</span>
 						</p>
-					</div>
+						</div>
 					</div>
 											
+				
+				
 					
-					</section>
-
-									<div class="col-5 col-4-medium col-12-xsmall"></div>
-                                    <div class="col-2 col-4-medium col-12-xsmall">
-										<ul class="actions stacked">
-											<li><input type="button" id="sendBtn" class="button primary fit" value="DEMO"></li>
-											</ul>
-						
-					</div>
-				</div>
-
 	
-		</div>
 
 <script type="template" id="list_item">
 <li class="list_item">
@@ -80,6 +62,45 @@
 		</div>
 </li>
 </script>
+
+
+<script type="template" id="project_infomation" >
+<div class="container">
+<header class="major">
+	<h2>{{name}}</h2>
+    <p>{{subDescription}}</p>
+	<p>{{description}}</p>
+</header>
+
+	<span class="image fit main"><img src="{{image}}" alt="{{name}}" /></span>
+
+
+	<div class="col-5 col-4-medium col-12-xsmall"></div>
+            <div class="col-2 col-4-medium col-12-xsmall">
+				<a herf="{{url}}" target="_blank"><input type="button" id="sendBtn" class="button primary fit" value="DEMO"></a>
+			</div>
+			
+</div>
+
+</script>
+<script>
+window.addEventListener("DOMCOntentLoader",function(){
+	
+	$.ajax({
+		type : "GET",
+		url : "./api/project?id=1",
+		success : setHTML(responseData),
+		error : function(){
+			alert("에러");
+		}
+		
+	});
+});
+function setHTML(responseData){
+	console.log(responseData);
+}
+</script>
+
 	</body>
 </html>
 

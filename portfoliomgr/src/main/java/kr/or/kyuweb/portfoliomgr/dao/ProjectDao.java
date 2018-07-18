@@ -32,6 +32,10 @@ public class ProjectDao {
 		  return jdbc.query("SELECT * FROM project",rowMapper);
 	 }
 	 
+	 public List<ProjectDto> selectById(int id){
+		  return jdbc.query("SELECT * FROM project",rowMapper);
+	 }
+	 
 	 
 }
 
