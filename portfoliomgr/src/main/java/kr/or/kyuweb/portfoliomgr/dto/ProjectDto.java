@@ -9,7 +9,6 @@ public class ProjectDto {
 	private String url;
 	private String description;
 	private String subDescription;
-	private String action;
 	private int fileId;
 	public int getId() {
 		return id;
@@ -41,12 +40,6 @@ public class ProjectDto {
 	public void setSubDescription(String subDescription) {
 		this.subDescription = subDescription;
 	}
-	public String getAction() {
-		return action;
-	}
-	public void setAction(String action) {
-		this.action = action;
-	}
 	public int getFileId() {
 		return fileId;
 	}
@@ -56,9 +49,9 @@ public class ProjectDto {
 	@Override
 	public String toString() {
 		return "ProjectDto [id=" + id + ", name=" + name + ", url=" + url + ", description=" + description
-				+ ", subDescription=" + subDescription + ", action=" + action + ", fileId=" + fileId + "]";
+				+ ", subDescription=" + subDescription + ", fileId=" + fileId + "]";
 	}
-	
+
 	
 	
 }

@@ -21,13 +21,12 @@ public class ApiController {
 	
 	@GetMapping(path="/project")
 	public Map<String,Object> getProjectList(@RequestParam(name="id") int id)  {
-		System.out.println(id);
 		Map<String,Object> resultDataMap = new HashMap<>();
 		
-		//if( id == 0 )
-			//resultDataMap.put("projectList", projectService.getProjectList());
-		//else
-			//resultDataMap.put("projectList", projectService.getProjectList());
+		if( id == 0 )
+			resultDataMap.put("projectList", projectService.getProjectListAll());
+		else
+			resultDataMap.put("projectList", projectService.getProjectList(id));
 		
 		return resultDataMap;
 	}

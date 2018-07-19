@@ -5,6 +5,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +31,8 @@ public class JoinController {
 	public String addVisiter( @RequestParam(name="name") String name,
 			@RequestParam(name="email") String email,
 			@RequestParam(name="password") String password,
-			@RequestParam(name="organization") String organization){
+			@RequestParam(name="organization") String organization,
+			HttpServletRequest req){
 		System.out.println("ViewPageController : /addVisiter");
 
 		VisiterDto visiter = new VisiterDto();
@@ -42,8 +45,31 @@ public class JoinController {
 			organization = "없음";
 		
 		visiter.setOrganization(organization);
-		visiterService.add(visiter);
+		
+		String clientIp = getClientIP(req);
+		
+		visiterService.add(visiter,clientIp);
 		
 		return "main";
 	}
+	
+	 public String getClientIP(HttpServletRequest request) {
+
+	     String ip = request.getHeader("X-FORWARDED-FOR"); 
+	     
+	     if (ip == null || ip.length() == 0) {
+	         ip = request.getHeader("Proxy-Client-IP");
+	     }
+
+	     if (ip == null || ip.length() == 0) {
+	         ip = request.getHeader("WL-Proxy-Client-IP");  // 웹로직
+	     }
+
+	     if (ip == null || ip.length() == 0) {
+	         ip = request.getRemoteAddr() ;
+	     }
+	     
+	     return ip;
+
+	 }
 }

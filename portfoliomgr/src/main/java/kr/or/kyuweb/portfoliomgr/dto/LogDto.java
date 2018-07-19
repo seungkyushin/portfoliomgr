@@ -8,6 +8,8 @@ public class LogDto {
 	private String createDate;
 	private String type;
 	private String description;
+	private String visiterEmail;
+	private String clientIp;
 	public int getId() {
 		return id;
 	}
@@ -32,11 +34,26 @@ public class LogDto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+	public String getVisiterEmail() {
+		return visiterEmail;
+	}
+	public void setVisiterEmail(String visiterEmail) {
+		this.visiterEmail = visiterEmail;
+	}
+	public String getClientIp() {
+		return clientIp;
+	}
+	public void setClientIp(String clientIp) {
+		this.clientIp = clientIp;
+	}
 	@Override
 	public String toString() {
-		return "Log [id=" + id + ", createDate=" + createDate + ", type=" + type + ", description=" + description + "]";
+		return "LogDto [id=" + id + ", createDate=" + createDate + ", type=" + type + ", description=" + description
+				+ ", visiterEmail=" + visiterEmail + ", clientIp=" + clientIp + "]";
 	}
+	
+	
+	
 	
 	
 }

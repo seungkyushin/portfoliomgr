@@ -23,7 +23,7 @@ public class ProjectServiceImpl implements ProjectService{
 	FileInfoDao fileInfoDao;
 	
 	@Override
-	public List<Map<String, Object>> getProjectList(int id) {
+	public List<Map<String, Object>> getProjectListAll() {
 		
 		List<ProjectDto> projectDto = projectDao.selectAll();
 		List<Map<String, Object>> resultList = new ArrayList<>();
@@ -32,7 +32,6 @@ public class ProjectServiceImpl implements ProjectService{
 			Map<String, Object> pramMap = new HashMap<>();
 			
 			pramMap.put("id", data.getId());
-			pramMap.put("action", data.getAction());
 			pramMap.put("description", data.getDescription());
 			pramMap.put("subdescription", data.getSubDescription());
 			pramMap.put("name", data.getName());
@@ -45,6 +44,23 @@ public class ProjectServiceImpl implements ProjectService{
 		}
 		
 		return resultList;
+	}
+
+	@Override
+	public Map<String, Object> getProjectList(int id) {
+		ProjectDto projectDto = projectDao.selectById(id);
+		Map<String, Object> result = new HashMap<>();
+			
+			result.put("id", projectDto.getId());
+			result.put("description", projectDto.getDescription());
+			result.put("subdescription", projectDto.getSubDescription());
+			result.put("name", projectDto.getName());
+			result.put("url", projectDto.getUrl());
+			
+			FileInfoDto fileInfoDto = fileInfoDao.selectById(projectDto.getFileId());
+			result.put("image", fileInfoDto.getSavePath());
+		
+		return result;
 	}
 
 

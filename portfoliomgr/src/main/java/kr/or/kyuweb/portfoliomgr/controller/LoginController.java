@@ -45,11 +45,13 @@ public class LoginController {
 		return "main";
 	}
 	
+	
 	@PostMapping(path="/logincheck")
 	public String loginCheck(@RequestParam(name="email") String email ,
 			@RequestParam(name="password") String password,
 			HttpSession session,
 			RedirectAttributes redirectAttr,
+			HttpServletRequest req,
 			HttpServletResponse res) {
 	
 		
@@ -60,7 +62,10 @@ public class LoginController {
 			System.out.println("sesstion false");
 		}
 		
-		if( visiterService.checkLogin(email, password) == true ) {
+		String clientIp = getClientIP(req);
+		
+		
+		if( visiterService.checkLogin(email, password, clientIp) == true ) {
 			
 			session.setAttribute("email", email);
 				
@@ -81,6 +86,27 @@ public class LoginController {
 		
 	}
 	
+	
+	 public String getClientIP(HttpServletRequest request) {
+
+	     String ip = request.getHeader("X-FORWARDED-FOR"); 
+	     
+	     if (ip == null || ip.length() == 0) {
+	         ip = request.getHeader("Proxy-Client-IP");
+	     }
+
+	     if (ip == null || ip.length() == 0) {
+	         ip = request.getHeader("WL-Proxy-Client-IP");  // 웹로직
+	     }
+
+	     if (ip == null || ip.length() == 0) {
+	         ip = request.getRemoteAddr() ;
+	     }
+	     
+	     return ip;
+
+	 }
+
 	
 	
 

@@ -77,15 +77,15 @@
 		</div>
 		
 		<script>
-		window.addEventListener("DOMContentLoaded",function(){
+		$(document).on(function(){
 			
-			document.querySelector("#sendBtn").addEventListener("click",function(event){
+			$("#sendBtn").on("click",function(event){
 				
 				event.preventDefault();
 				
 				if( isCheckForm() == true )
 				 {
-					document.querySelector("#formData").submit();
+					$("#formData").submit();
 				 }
 	  
 			});
@@ -93,35 +93,36 @@
 		});
 		function isCheckForm(){
 						
-			var name = document.querySelector("#name");
-			var password =  document.querySelector("#password");
-			var email = document.querySelector("#email");
-			var checkMsg = document.querySelector("#checkmsg");
+			var name = $("#name").val();
+			var password =  $("#password").val();
+			var email = $("#email").val();
+			var checkMsgHTML = "";
 			var result = true;
 			
-			checkMsg.innerHTML = "";
+			$("#checkmsg").html("");
 			
-			if( name.value.length <= 0 ){
-				checkMsg.innerHTML += " [<strong style='color:#e44c65'>이름</strong>] "
+			if( name.length <= 0 ){
+				checkMsgHTML += " [<strong style='color:#e44c65'>이름</strong>] "
 				startAnimation("#name","shake");
 				result = false;
 			}
 			
-			if( password.value.length <= 0 ){
-				checkMsg.innerHTML += " [<strong style='color:#e44c65'>비밀번호</strong>] ";
+			if( password.length <= 0 ){
+				checkMsgHTML += " [<strong style='color:#e44c65'>비밀번호</strong>] ";
 				startAnimation("#password","shake");
 				result = false;
 			}
 			
 					
-			if( email.value.length <= 0 || email.value.match(/\w@\w.\w/) == null)
+			if( email.length <= 0 || email.match(/\w@\w.\w/) == null)
 			{
-				checkMsg.innerHTML += " [<strong style='color:#e44c65'>이메일</strong>] ";
+				checkMsgHTML += " [<strong style='color:#e44c65'>이메일</strong>] ";
 				startAnimation("#email","shake");
 				result = false;
 			}
 
-			checkMsg.innerHTML += "를 확인해 주세요!";
+			checkMsgHTML += "를 확인해 주세요!";
+			$("#checkmsg").html(checkMsgHTML);
 			
 			return result;
 		}

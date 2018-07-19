@@ -10,19 +10,19 @@
 -->
 <html>
 	<head>
-		<title>KYU - TODO LIST</title>
+		<title>KYU - PROJECT INFOMATION</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+		
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
 
 	   			<!-- Main -->
 				<div id="main" class="wrapper style1">
-					<!--  -->
+					<!-- project 내용  -->
 				</div>		
 				
 					<div class="container">
@@ -37,11 +37,14 @@
 									class="total">5.0</em>
 								</strong> <span class="join_count"><em class="green">52건</em> 등록</span>
 							</div>
+							
 							<ul class="list_short_review">
+							<!-- project 덧글 -->
 							</ul>
 						</div>
 						<p class="guide">
 							<span> * 실제 방문한 사용자가 남긴 평가입니다.</span>
+							
 						</p>
 						</div>
 					</div>
@@ -64,40 +67,47 @@
 </script>
 
 
-<script type="template" id="project_infomation" >
+<script type="template" id="template-project-infomation" >
 <div class="container">
 <header class="major">
 	<h2>{{name}}</h2>
-    <p>{{subDescription}}</p>
+    <p>{{subdescription}}</p>
 	<p>{{description}}</p>
 </header>
 
 	<span class="image fit main"><img src="{{image}}" alt="{{name}}" /></span>
-
-
 	<div class="col-5 col-4-medium col-12-xsmall"></div>
             <div class="col-2 col-4-medium col-12-xsmall">
-				<a herf="{{url}}" target="_blank"><input type="button" id="sendBtn" class="button primary fit" value="DEMO"></a>
+				<a href="{{url}}" target="_blank"><input type="button" id="sendBtn" class="button primary fit" value="DEMO"></a>
 			</div>
 			
 </div>
 
 </script>
 <script>
-window.addEventListener("DOMCOntentLoader",function(){
-	
+window.addEventListener("DOMContentLoaded",function(){
 	$.ajax({
 		type : "GET",
-		url : "./api/project?id=1",
-		success : setHTML(responseData),
+		url : "./api/project?id=" + ${requestScope.id},
+		success : function(response){
+				setHTML(response);
+			},
 		error : function(){
 			alert("에러");
 		}
 		
-	});
+	}); 
 });
 function setHTML(responseData){
-	console.log(responseData);
+	var projectInfo = responseData.projectList; 
+	var data = {};
+	data['name'] = projectInfo.name;
+	data['subdescription'] = projectInfo.subdescription;
+	data['description']  = projectInfo.description;
+	data['image'] = projectInfo.image;
+	data['url'] = projectInfo.url;
+	
+	templateParserAfter("#template-project-infomation",data, "#main");
 }
 </script>
 

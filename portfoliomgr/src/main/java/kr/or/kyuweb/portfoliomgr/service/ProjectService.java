@@ -7,6 +7,7 @@ import kr.or.kyuweb.portfoliomgr.dto.ProjectDto;
 
 public interface ProjectService {
 	
-	public List<Map<String,Object>> getProjectList(int id);
+	public List<Map<String,Object>> getProjectListAll();
+	public Map<String,Object> getProjectList(int id);
 
 }

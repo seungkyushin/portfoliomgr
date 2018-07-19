@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp" %>
+<%@ include file="/common/header.jsp"%>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -10,7 +11,6 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/action.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 	</head>
 	<body class="is-preload landing">
 		<div id="main-page-wrapper">
@@ -26,11 +26,11 @@
 						</header>
 						<span class="image animated pulse infinite"><img src="images/pic01.jpg" alt="" /></span>
 					</div>
-					<a href="#one" class="goto-next scrolly">Next</a>
+					<a href="#info" class="goto-next scrolly">Next</a>
 				</section>
 
 			<!-- One -->
-		<section id="one" class="spotlight style1 bottom">
+		<section id="info" class="spotlight style1 bottom">
 					<span class="image fit main"><img src="images/pic02.jpg" alt="" /></span>
 					<div class="content">
 						<div class="container">
@@ -54,10 +54,86 @@
 					</div>
 					<a href="#two" class="goto-next scrolly">Next</a>
 				</section> 
+				
+				
+
+	<!-- Two -->
+		</div>
+		
+		
+			<script type="template" id="template-project">
+			<section id="project-{{id}}" class="spotlight style1 right">
+			
+					<span class="image fit main"><img src="{{image}}" alt="{{name}}" /></span>
+					<div class="content">
+						<header>
+							<h2>{{name}}</h2>
+							<p>{{subdescription}}</p>
+						</header>
+						<p>{{description}}</p>
+						<ul class="actions">
+							<li><a href="./descriptionProject?id={{id}}" class="button">자세히 보기</a></li>
+						</ul>
+					</div>
+					<a href="#three" class="goto-next scrolly">Next</a>
+			</section>
+			</script>
+			
+			
+		<script>
+			$(document).ready(function(){
+				
+				 $.ajax({
+					type : "GET",
+					url : "./api/project?id=0",
+					success : function(response){
+							setProjectInfomation(response);
+						},
+					
+					error : function(){
+						console.log("에러");
+					}
+				}); 
+				
+			});
+			
+			function setProjectInfomation(responseData){
+				responseData.projectList.forEach(function(v,i){
+						setProjectHTML(v,i);
+							
+				}); 
+				
+				//< 애니매이션을 다시 설정해주기위해 스크립트를 불러온다.
+				 $.getScript("assets/js/main.js", function(data, textStatus, jqxhr) {
+				});
+					 
+			}
+			
+			
+			function setProjectHTML(responseData,childNum){
+				var projectInfo = responseData; 
+				var data = {};
+				
+				data['id'] = projectInfo.id;
+				data['name'] = projectInfo.name;
+				data['subdescription'] = projectInfo.subdescription;
+				data['description']  = projectInfo.description;
+				data['image'] = projectInfo.image;
+				data['url'] = projectInfo.url;
+				
+				var resultHTML = templateParserAfter("#template-project",
+						data,"#main-page-wrapper");
+	
+			}
+			
+		</script>
+	</body>
+</html>
+
 
 			<!-- Two -->
-				<section id="two" class="spotlight style2 right">
-					<span class="image fit main"><img src="images/todo.gif" alt="" /></span>
+			<!-- 	<section id="todo" class="spotlight style2 right">
+					<span class="image fit main"><img src="#" alt="#" /></span>
 					<div class="content">
 						<header>
 							<h2>NAME</h2>
@@ -69,7 +145,7 @@
 						</ul>
 					</div>
 					<a href="#three" class="goto-next scrolly">Next</a>
-				</section>
+				</section> -->
 <!-- 
 			Three
 				<section id="three" class="spotlight style3 left">
@@ -151,58 +227,5 @@
 						</form>
 					</div>
 				</section> -->
-
-			
-
-		</div>
-		
-			<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			
-			<script>
-			window.addEventListener("DOMContentLoaded",function(){
 				
-				$.ajax({
-					type : "GET",
-					url : "./api/project",
-					success : function(data){
-						setProject(data);
-					},
-					error : function(){
-						console.log("에러");
-					}
-				});
-				
-			});
-			
-			function setProject(responseData){
-		
-				
-			
-				responseData.projectList.forEach(function(v){
-					var section = document.querySelector("#two");
-					
-					section.querySelector(".image.fit.main").innerHTML = '<img src=' + v.image + 'alt="" />';
-					section.querySelector(".content").innerHTML = 
-						'<header> <h2>' + v.name + '</h2> <p>' + v.subdescription + '</p> </header>'
-						+ '<p>' + v.description + '</p>'
-						+ '<ul class="actions">' +
-							'<li><a href="' +v.action+ '" class="button">자세히 보기</a></li></ul>';
-						
-					
-				});
-			
-				 
-			}
-			</script>
-			
-	</body>
-</html>
  <%@ include file="/common/footer.jsp" %>

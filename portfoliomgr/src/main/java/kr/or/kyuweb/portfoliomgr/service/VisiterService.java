@@ -7,8 +7,8 @@ import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 
 public interface VisiterService {
 
-	public int add(VisiterDto data);
-	public int delete(VisiterDto data);
-	public boolean checkLogin(String email, String password);
+	public int add(VisiterDto data,String ip);
+	public int delete(VisiterDto data, String ip);
+	public boolean checkLogin(String email, String password, String ip);
 	
 }

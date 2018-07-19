@@ -26,11 +26,13 @@ public class VisiterServiceImpl implements VisiterService{
 	private  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	
-	public void insertLog(String type, String Description) {
+	public void insertLog(String type, String description, String email , String ip) {
 		
 		LogDto log = new LogDto();
 		log.setType(type);
-		log.setDescription(Description);
+		log.setDescription(description);
+		log.setVisiterEmail(email);
+		log.setClientIp(ip);
 		log.setCreateDate(dateFormat.format(new Date()));
 		
 		logDao.insert(log);
@@ -39,26 +41,26 @@ public class VisiterServiceImpl implements VisiterService{
 	
 	@Override
 	
-	public int add(VisiterDto data) {
+	public int add(VisiterDto data ,String ip) {
 		
 		DateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		data.setCreateDate(dateFormat.format(new Date()));
 		
 		int result = visiterDao.insert(data);
 
-		insertLog("info","새로 가입 하였습니다. " + data.getEmail());
+		insertLog("info","방문자 가입 성공",data.getEmail(),ip);
 		
 		return result;
 	}
 
 	@Override
-	public int delete(VisiterDto data) {
+	public int delete(VisiterDto data ,String ip) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public boolean checkLogin(String email,String password) {
+	public boolean checkLogin(String email,String password ,String ip) {
 		// TODO Auto-generated method stub
 		
 		
@@ -69,7 +71,7 @@ public class VisiterServiceImpl implements VisiterService{
 			//< 마지막 로그인 갱신
 			visiterDao.updateLastLoginTime(visiter.getEmail(), dateFormat.format(new Date()));
 			//< 로그
-			insertLog("info", visiter.getEmail() + "님이 로그인 하셨습니다.");
+			insertLog("info", "로그인 성공", visiter.getEmail(),ip);
 			
 			return true;
 			

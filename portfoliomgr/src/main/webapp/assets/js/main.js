@@ -23,6 +23,8 @@
 			window.setTimeout(function() {
 				$body.removeClass('is-preload');
 			}, 100);
+			
+			
 		});
 
 	// Touch mode.
@@ -185,7 +187,7 @@
 
 							// Uncomment the line below to "rewind" when this spotlight scrolls out of view.
 
-							//leave:	function(t) { $this.addClass('inactive'); },
+							leave:	function(t) { $this.addClass('inactive'); },
 
 						});
 
@@ -248,3 +250,4 @@
 			._parallax();
 
 })(jQuery);
+
