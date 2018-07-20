@@ -20,7 +20,7 @@ public class DescriptionController {
 	public String showDescriptionProjectPage(@RequestParam(name="id") int projectId,
 			HttpServletRequest req) {
 		System.out.println(projectId);
-		req.setAttribute("id", projectId);
+		req.setAttribute("projectId", projectId);
 		return "descriptionProject";
 	}
 	

@@ -46,9 +46,22 @@ public class VisiterDao {
 		 Map<String,String> paramMap = new HashMap<>();
 		 paramMap.put("email", email);
 		 
-		 
 		 try {
 			 	return jdbc.queryForObject(SELECT_BY_EMAIL, paramMap, rowMapper);
+		 }catch(EmptyResultDataAccessException e)
+		 {
+			 return null;
+		 }
+
+	 }
+	 
+	 public VisiterDto selectById(int id){
+		 Map<String,Integer> paramMap = new HashMap<>();
+		 paramMap.put("id", id);
+		 
+		 
+		 try {
+			 	return jdbc.queryForObject(SELECT_BY_ID, paramMap, rowMapper);
 		 }catch(EmptyResultDataAccessException e)
 		 {
 			 return null;
@@ -56,6 +69,7 @@ public class VisiterDao {
 		 
 		 
 	 }
+	 
 	 
 	 
 	 public int insert(VisiterDto data) {

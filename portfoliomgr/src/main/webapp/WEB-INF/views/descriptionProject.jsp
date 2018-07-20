@@ -28,23 +28,26 @@
 					<div class="container">
 						<div class="review_box">
 							<h2>User Comment</h2>
-						<div class="short_review_area">
-							<div class="grade_area">
-								<!-- [D] 별점 graph_value는 퍼센트 환산하여 width 값을 넣어줌 -->
-								<span class="graph_mask"> <em class="graph_value"
-									style="width: 84%;"></em>
-								</span> <strong class="text_value"> <span>4.2</span> <em
-									class="total">5.0</em>
-								</strong> <span class="join_count"><em class="green">52건</em> 등록</span>
-							</div>
+					
+							</strong> <span class="join_count">총 덧글은 <em id="maxCount">0</em>개</span>
+						
 							
 							<ul class="list_short_review">
 							<!-- project 덧글 -->
 							</ul>
 						</div>
+			
+						   		<c:choose>
+								    <c:when test="${empty sessionScope.email }">
+								        <a href="./login" >로그인</a>    
+								    </c:when>
+								    <c:otherwise>
+								         <a href="./comment?projectId=${requestScope.projectId}" >응원하기</a>    
+								    </c:otherwise>
+								</c:choose>   
+
 						<p class="guide">
 							<span> * 실제 방문한 사용자가 남긴 평가입니다.</span>
-							
 						</p>
 						</div>
 					</div>
@@ -57,11 +60,12 @@
 <script type="template" id="list_item">
 <li class="list_item">
 		<div class="review_area">
-			<h3 class="review-id">{{id}} 님</h3>
+			<h3 class="review-email">{{visiterEmail}} 님의 한마디</h3>
+			<span>종류 : {{type}}</span>
 			<p class="review">
-			{{comment}}
+				{{content}}
 			</p>
-			<span class="grade"></span> | <span class="date">{{date}}</span> 등록
+			<span class="grade">{{score}}점</span> | <span class="date">{{date}}</span> 등록
 		</div>
 </li>
 </script>
@@ -86,22 +90,35 @@
 </script>
 <script>
 window.addEventListener("DOMContentLoaded",function(){
+	var projectId = ${requestScope.projectId};
+	
 	$.ajax({
 		type : "GET",
-		url : "./api/project?id=" + ${requestScope.id},
-		success : function(response){
-				setHTML(response);
-			},
+		url : "./api/project?id=" + projectId,
+		success : setHTML,
+		error : function(){
+			alert("에러");
+		}
+		
+	});
+	
+	$.ajax({
+		type : "GET",
+		url : "./api/comment?projectId=" + projectId +"&start=0",
+		success : setCommentHTML,
 		error : function(){
 			alert("에러");
 		}
 		
 	}); 
+	
+
+	
 });
 function setHTML(responseData){
 	var projectInfo = responseData.projectList; 
 	var data = {};
-	data['name'] = projectInfo.name;
+	data['email'] = projectInfo.name;
 	data['subdescription'] = projectInfo.subdescription;
 	data['description']  = projectInfo.description;
 	data['image'] = projectInfo.image;
@@ -109,6 +126,31 @@ function setHTML(responseData){
 	
 	templateParserAfter("#template-project-infomation",data, "#main");
 }
+
+function setCommentHTML(responseData){
+	var comments = responseData.comments; 
+	var avgScore = 0;
+	comments.forEach(function(v){
+		
+		var data = {};
+		data['visiterEmail'] = v.visiterEmail;
+		data['content'] = v.content;
+		data['score'] = v.score;
+		data['type'] = v.type;
+		data['date']  = v.date;
+		
+		templateParserAfter("#list_item",data, ".list_short_review");
+		
+		avgScore += v.score;
+	});
+	
+	avgScore /= responseData.comments.length;
+	avgScore = avgScore.toFixed(1);
+	
+	$(".text_value").text(avgScore);
+	$("#maxCount").text(responseData.comments.length);
+}
+
 </script>
 
 	</body>

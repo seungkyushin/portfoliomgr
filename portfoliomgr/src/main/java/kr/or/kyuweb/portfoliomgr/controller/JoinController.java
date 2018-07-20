@@ -1,10 +1,6 @@
 package kr.or.kyuweb.portfoliomgr.controller;
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
+import kr.or.kyuweb.portfoliomgr.service.LogService;
 import kr.or.kyuweb.portfoliomgr.service.VisiterService;
 
 @Controller
@@ -21,6 +18,9 @@ public class JoinController {
 
 	@Autowired
 	VisiterService visiterService;
+	
+	@Autowired
+	LogService logService;
 	
 	@GetMapping(path="/join")
 	public String showpage() {
@@ -46,30 +46,11 @@ public class JoinController {
 		
 		visiter.setOrganization(organization);
 		
-		String clientIp = getClientIP(req);
-		
+		String clientIp = logService.getClientIP(req);
 		visiterService.add(visiter,clientIp);
 		
 		return "main";
 	}
 	
-	 public String getClientIP(HttpServletRequest request) {
-
-	     String ip = request.getHeader("X-FORWARDED-FOR"); 
-	     
-	     if (ip == null || ip.length() == 0) {
-	         ip = request.getHeader("Proxy-Client-IP");
-	     }
-
-	     if (ip == null || ip.length() == 0) {
-	         ip = request.getHeader("WL-Proxy-Client-IP");  // 웹로직
-	     }
-
-	     if (ip == null || ip.length() == 0) {
-	         ip = request.getRemoteAddr() ;
-	     }
-	     
-	     return ip;
-
-	 }
+	 
 }

@@ -77,7 +77,7 @@
 		</div>
 		
 		<script>
-		$(document).on(function(){
+		$(document).ready(function(){
 			
 			$("#sendBtn").on("click",function(event){
 				

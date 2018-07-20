@@ -9,5 +9,6 @@ public interface ProjectService {
 	
 	public List<Map<String,Object>> getProjectListAll();
 	public Map<String,Object> getProjectList(int id);
+	public ProjectDto getProjectDto(int id);
 
 }

@@ -17,27 +17,10 @@ import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 public class VisiterServiceImpl implements VisiterService{
 	
 	@Autowired
-	private VisiterDao visiterDao; 
+	VisiterDao visiterDao; 
 
 	@Autowired
-	private LogDao logDao; 
-	
-	
-	private  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	
-	
-	public void insertLog(String type, String description, String email , String ip) {
-		
-		LogDto log = new LogDto();
-		log.setType(type);
-		log.setDescription(description);
-		log.setVisiterEmail(email);
-		log.setClientIp(ip);
-		log.setCreateDate(dateFormat.format(new Date()));
-		
-		logDao.insert(log);
-		
-	}
+	LogService logService;
 	
 	@Override
 	
@@ -48,7 +31,7 @@ public class VisiterServiceImpl implements VisiterService{
 		
 		int result = visiterDao.insert(data);
 
-		insertLog("info","방문자 가입 성공",data.getEmail(),ip);
+		logService.recordLog("info","방문자 가입 성공",data.getEmail(),ip);
 		
 		return result;
 	}
@@ -60,24 +43,35 @@ public class VisiterServiceImpl implements VisiterService{
 	}
 
 	@Override
-	public boolean checkLogin(String email,String password ,String ip) {
+	public int checkLogin(String email,String password ,String ip) {
 		// TODO Auto-generated method stub
 		
 		
-		VisiterDto visiter = visiterDao.selectByEmail(email);
+		VisiterDto visiter = this.getVisiter(email);
 		
 		if(visiter != null && visiter.getPassword().equals(password) == true) {		
-
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			//< 마지막 로그인 갱신
 			visiterDao.updateLastLoginTime(visiter.getEmail(), dateFormat.format(new Date()));
 			//< 로그
-			insertLog("info", "로그인 성공", visiter.getEmail(),ip);
+			logService.recordLog("info", "로그인 성공", visiter.getEmail(),ip);
 			
-			return true;
+			return visiter.getId();
 			
 		}
 		
-		return false;
+		return 0;
+	}
+
+	@Override
+	public VisiterDto getVisiter(String email) {
+		return visiterDao.selectByEmail(email);
+	}
+
+	@Override
+	public VisiterDto getVisiter(int id) {
+		return visiterDao.selectById(id);
 	}
 
 }

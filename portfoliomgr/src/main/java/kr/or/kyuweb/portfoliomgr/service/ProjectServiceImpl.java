@@ -63,5 +63,10 @@ public class ProjectServiceImpl implements ProjectService{
 		return result;
 	}
 
+	@Override
+	public ProjectDto getProjectDto(int id) {
+		return projectDao.selectById(id);
+	}
+	
 
 }

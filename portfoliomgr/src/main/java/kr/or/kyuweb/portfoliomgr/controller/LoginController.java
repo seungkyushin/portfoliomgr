@@ -64,12 +64,13 @@ public class LoginController {
 		
 		String clientIp = getClientIP(req);
 		
-		
-		if( visiterService.checkLogin(email, password, clientIp) == true ) {
+		int UserId = visiterService.checkLogin(email, password, clientIp);
+		if( UserId != 0 ) {
 			
 			session.setAttribute("email", email);
 				
 			Cookie info = new Cookie("email", email);    // 쿠키를 생성한다. 이름:testCookie, 값 : Hello Cookie
+			
 			info.setMaxAge(60*60);                                 // 쿠키의 유효기간을 365일로 설정한다.
 			info.setPath("/");
 			res.addCookie(info);   

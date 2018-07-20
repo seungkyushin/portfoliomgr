@@ -64,8 +64,9 @@
 		</div>
 		
 		<script>
-		$(document).ready(function(){
+$(document).ready(function(){
 			
+
 			$("#sendBtn").on("click",function(event){
 				 
 				 event.preventDefault();
@@ -80,9 +81,9 @@
 				 
 			 });
 			 
-		 });
+});
 		 
-			function isCheckForm(){
+function isCheckForm(){
 				
 				var password =  $("#password").val();
 				var email = $("#email").val();
@@ -110,13 +111,13 @@
 				$("#checkmsg").html(checkMsgHTML);
 				
 				return result;
-			}
+}
 			
-			function startAnimation(elementName, type){
+function startAnimation(elementName, type){
 				$(elementName).removeClass().addClass(type + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
 				      $(this).removeClass();
 				    });
-			}
+}
 			
 		</script>
 	</body>

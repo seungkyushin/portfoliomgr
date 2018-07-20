@@ -23,9 +23,9 @@
 				<div id="main" class="wrapper style1">
 					<div class="container">
 						<header class="major">
-							<h2>${requestScope.head}</h2>
-                            <p>${requestScope.content}</p>
-                           
+							<h2>에고 이런,,,</h2>
+                            <p>개발자가 의도하지 않은 페이지로 가셨어요 ㅜㅜ</p>
+                           	<a href="./main">메인으로..</p>
 						</header>
 
 					</div>
