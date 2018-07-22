@@ -28,18 +28,18 @@
 					<div class="container">
 						<div class="review_box">
 							<h2>User Comment</h2>
-					
-							</strong> <span class="join_count">총 덧글은 <em id="maxCount">0</em>개</span>
+							<h3>총점 :  <em id="avgScore">0</em> </h3>
+							<span class="join_count">총 덧글은 <em id="maxCount">0</em>개</span>
 						
 							
-							<ul class="list_short_review">
+							<ul id="list_review">
 							<!-- project 덧글 -->
 							</ul>
 						</div>
 			
 						   		<c:choose>
 								    <c:when test="${empty sessionScope.email }">
-								        <a href="./login" >로그인</a>    
+								        <a href="./login" >로그인</a><span>후 덧글 남기기!</span>   
 								    </c:when>
 								    <c:otherwise>
 								         <a href="./comment?projectId=${requestScope.projectId}" >응원하기</a>    
@@ -49,6 +49,12 @@
 						<p class="guide">
 							<span> * 실제 방문한 사용자가 남긴 평가입니다.</span>
 						</p>
+						
+						
+						<ul id="page-count">
+					
+						</ul>
+						
 						</div>
 					</div>
 											
@@ -58,14 +64,16 @@
 	
 
 <script type="template" id="list_item">
-<li class="list_item">
+<li class="list_item" style="list-style-type: none" >
 		<div class="review_area">
+			<sapn>-----------------------------------------------------------</sapn>
 			<h3 class="review-email">{{visiterEmail}} 님의 한마디</h3>
 			<span>종류 : {{type}}</span>
 			<p class="review">
 				{{content}}
 			</p>
-			<span class="grade">{{score}}점</span> | <span class="date">{{date}}</span> 등록
+			<span class="grade">{{score}}점</span> | <span class="date">{{date}}</span> 등록<br>
+			<sapn>-----------------------------------------------------------</sapn>
 		</div>
 </li>
 </script>
@@ -102,19 +110,25 @@ window.addEventListener("DOMContentLoaded",function(){
 		
 	});
 	
+	ajaxComment(projectId,0);
+
+});
+
+function ajaxComment(projectId,start){
 	$.ajax({
 		type : "GET",
-		url : "./api/comment?projectId=" + projectId +"&start=0",
-		success : setCommentHTML,
+		url : "./api/comment?projectId=" + projectId +"&start=" + start,
+		success : function(response){
+			setCommentHTML(response);
+			setPageCount(response);
+		},
 		error : function(){
 			alert("에러");
 		}
 		
 	}); 
 	
-
-	
-});
+}
 function setHTML(responseData){
 	var projectInfo = responseData.projectList; 
 	var data = {};
@@ -127,30 +141,59 @@ function setHTML(responseData){
 	templateParserAfter("#template-project-infomation",data, "#main");
 }
 
+//< 덧글을 수정합니다.
 function setCommentHTML(responseData){
+	$("#list_review").empty();
+	
 	var comments = responseData.comments; 
-	var avgScore = 0;
-	comments.forEach(function(v){
+
+	comments.forEach(function(v){	
+			var data = {};
+			data['visiterEmail'] = v.visiterEmail;
+			data['content'] = v.content;
+			data['score'] = v.score;
+			data['type'] = v.type;
+			data['date']  = v.date;
 		
-		var data = {};
-		data['visiterEmail'] = v.visiterEmail;
-		data['content'] = v.content;
-		data['score'] = v.score;
-		data['type'] = v.type;
-		data['date']  = v.date;
-		
-		templateParserAfter("#list_item",data, ".list_short_review");
-		
-		avgScore += v.score;
-	});
+			templateParserAfter("#list_item",data, "#list_review");
+		});
 	
-	avgScore /= responseData.comments.length;
-	avgScore = avgScore.toFixed(1);
+	var avgScore = (Math.floor(responseData.avgScore * 10)/10);
+	$("#avgScore").text( avgScore + "/5.0");
+	$("#maxCount").text(responseData.allCount);
 	
-	$(".text_value").text(avgScore);
-	$("#maxCount").text(responseData.comments.length);
 }
 
+//< 덧글 패이지 수를 설정합니다.
+function setPageCount(responseData){
+	$("#page-count").empty();
+	
+	var pageCount = responseData.allCount / 4;
+	pageCount = Math.floor(pageCount);
+	
+	if(responseData.allCount % 4 > 0)
+		pageCount++;
+	
+	for( var index = 1; index <= pageCount; index++){
+		$("#page-count").append(function(){
+
+				var html = '<li style="list-style-type:none;float: left;">';			
+				if((responseData.currentPage/4) == index-1){
+					return html += '<a style="color:rgb(228, 76, 101)" href="javascript:void(0)">' + index + '</a></li>';		
+				}
+				
+				return html += '<a style="color:rgb(255, 255, 255)" href="javascript:void(0)">' + index + '</a></li>';
+	
+		});
+	}
+	
+
+	$("#page-count").on("click",function(event){
+		var startNum = (event.target.innerText-1) * 4;
+		var projectId = ${requestScope.projectId};
+		ajaxComment(projectId,startNum);
+	});	
+}
 </script>
 
 	</body>

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/WEB-INF/views/error")
 public class ErrorController {
 
-	@RequestMapping(value="/error404")
+	@RequestMapping(value="/notfound")
 	public String pageError400( HttpServletResponse res,
 			Model model) {
 		

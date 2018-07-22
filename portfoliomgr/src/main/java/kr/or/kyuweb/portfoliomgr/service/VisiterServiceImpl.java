@@ -46,6 +46,7 @@ public class VisiterServiceImpl implements VisiterService{
 	public int checkLogin(String email,String password ,String ip) {
 		// TODO Auto-generated method stub
 		
+		logService.recordLog("info", "로그인 시도 ", email,ip);
 		
 		VisiterDto visiter = this.getVisiter(email);
 		
@@ -60,6 +61,7 @@ public class VisiterServiceImpl implements VisiterService{
 			return visiter.getId();
 			
 		}
+		
 		
 		return 0;
 	}

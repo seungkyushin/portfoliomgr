@@ -66,7 +66,11 @@ public class ApiController {
 		
 		
 		resultMap.put("comments", paramList);
-
+		resultMap.put("allCount",userCommentService.getUserCommentCount(projectId) );
+		resultMap.put("avgScore",userCommentService.getUserCommentAvgScore(projectId) );
+		resultMap.put("currentPage",start );
+		
+		
 		return resultMap;
 	}
 	

@@ -62,7 +62,7 @@
 		
 		
 			<script type="template" id="template-project">
-			<section id="project-{{id}}" class="spotlight style1 right">
+			<section id="project-{{id}}" class="spotlight {{style}} {{direction}}">
 			
 					<span class="image fit main"><img src="{{image}}" alt="{{name}}" /></span>
 					<div class="content">
@@ -121,9 +121,20 @@
 				data['image'] = projectInfo.image;
 				data['url'] = projectInfo.url;
 				
+				
+				data['style'] = "style" + makeRandom(1,4);
+				var direction = ['right','left'];
+				data['direction'] = direction[ makeRandom(0,2)];
+				
+				
 				var resultHTML = templateParserAfter("#template-project",
 						data,"#main-page-wrapper");
 	
+			}
+
+			function makeRandom(min, max){
+			    var RandVal = Math.random() * (max- min) + min;
+			    return Math.floor(RandVal);
 			}
 			
 		</script>

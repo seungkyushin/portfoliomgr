@@ -39,12 +39,25 @@ public class UserCommentDao {
 		return jdbc.query("SELECT * FROM user_comment WHERE project_id=:id AND show_check='off' limit :start, :limit", paramMap, rowMapper);
 	}
 	
+	public List<UserCommentDto> selectAllByProjectId(int id){
+		Map<String,Integer> paramMap = new HashMap<>();
+		paramMap.put("id", id);
+		return jdbc.query("SELECT * FROM user_comment WHERE project_id=:id", paramMap, rowMapper);
+	}
+	
+	
 	public List<UserCommentDto> selectByVisiterId(int id,int start){
 		Map<String,Integer> paramMap = new HashMap<>();
 		paramMap.put("id", id);
 		paramMap.put("start", start);
 		paramMap.put("limit", LILIT);
 		return jdbc.query("SELECT * FROM user_comment WHERE visiter_id=:id AND show_check='off' limit :start, :limit", paramMap, rowMapper);
+	}
+	
+	public int selectCountByPorjectId(int ProjectId){
+		Map<String,Integer> paramMap = new HashMap<>();
+		paramMap.put("ProjectId", ProjectId);
+		return jdbc.queryForObject("SELECT COUNT(*) FROM user_comment WHERE project_id=:ProjectId", paramMap, Integer.class);
 	}
 	
 	public int insert(UserCommentDto data) {

@@ -52,4 +52,30 @@ public class UserCommentServiceImpl implements UserCommentService{
 		return userCommentDao.insert(data);
 	}
 
+	@Override
+	public int getUserCommentCount(int projectId) {
+		return userCommentDao.selectCountByPorjectId(projectId);
+	}
+
+	@Override
+	public List<UserCommentDto> getAllUserCommentByProjectId(int id) {
+		return userCommentDao.selectAllByProjectId(id);
+	}
+
+	@Override
+	public float getUserCommentAvgScore(int projectId) {
+		List<UserCommentDto> UserCommentList =  getAllUserCommentByProjectId(projectId);
+		
+		float sumScore = 0;
+		
+		for( UserCommentDto data : UserCommentList)
+		{
+			sumScore += data.getScore();
+		}
+		
+		sumScore /=  UserCommentList.size();
+		
+		return sumScore;
+	}
+
 }
