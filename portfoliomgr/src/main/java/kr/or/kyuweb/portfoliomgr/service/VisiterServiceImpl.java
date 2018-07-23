@@ -1,10 +1,12 @@
 package kr.or.kyuweb.portfoliomgr.service;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +30,19 @@ public class VisiterServiceImpl implements VisiterService{
 		
 		DateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		data.setCreateDate(dateFormat.format(new Date()));
+		int result = 0;
 		
-		int result = visiterDao.insert(data);
+		try {
+				result = visiterDao.insert(data);
+				logService.recordLog("info","방문자 가입 성공",data.getEmail(),ip);
+				
+		}catch(SQLException e){
+			logService.recordLog("error",e.getSQLState() + ":" + e.getMessage(),data.getEmail(),ip);
+		}catch(DuplicateKeyException e) {
+			result = -1;
+			logService.recordLog("error",e.getMessage(),data.getEmail(),ip);
+		}
 
-		logService.recordLog("info","방문자 가입 성공",data.getEmail(),ip);
-		
 		return result;
 	}
 

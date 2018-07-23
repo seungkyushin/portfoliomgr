@@ -28,8 +28,8 @@
 					<div class="container">
 						<div class="review_box">
 							<h2>User Comment</h2>
-							<h3>총점 :  <em id="avgScore">0</em> </h3>
-							<span class="join_count">총 덧글은 <em id="maxCount">0</em>개</span>
+							<h3>총점 :  <em id="avgScore">0/5.0</em> </h3>
+							<span class="join_count">총 덧글 수 <em id="maxCount">0</em>개</span>
 						
 							
 							<ul id="list_review">
@@ -143,8 +143,10 @@ function setHTML(responseData){
 
 //< 덧글을 수정합니다.
 function setCommentHTML(responseData){
-	$("#list_review").empty();
 	
+	if(responseData.allCount == 0) return;
+	
+	$("#list_review").empty();
 	var comments = responseData.comments; 
 
 	comments.forEach(function(v){	

@@ -30,7 +30,8 @@ public class ProjectDao {
 	 }
 	 
 	 public List<ProjectDto> selectAll() {
-		  return jdbc.query("SELECT * FROM project",rowMapper);
+		 String sql = "SELECT * FROM project ORDER BY id desc";
+		  return jdbc.query(sql,rowMapper);
 	 }
 	 
 	 public ProjectDto selectById(int id){

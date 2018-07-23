@@ -1,14 +1,18 @@
 package kr.or.kyuweb.portfoliomgr.dao;
 
-import static kr.or.kyuweb.portfoliomgr.sql.VisiterSql.*;
+import static kr.or.kyuweb.portfoliomgr.sql.VisiterSql.SELECT_ALL;
+import static kr.or.kyuweb.portfoliomgr.sql.VisiterSql.SELECT_BY_EMAIL;
+import static kr.or.kyuweb.portfoliomgr.sql.VisiterSql.SELECT_BY_ID;
+import static kr.or.kyuweb.portfoliomgr.sql.VisiterSql.UPDATE_LAST_LOGIN_TIME;
 
-
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -72,7 +76,7 @@ public class VisiterDao {
 	 
 	 
 	 
-	 public int insert(VisiterDto data) {
+	 public int insert(VisiterDto data) throws SQLException, DuplicateKeyException{
 		 
 		 SqlParameterSource params = new BeanPropertySqlParameterSource(data);
 			return insertAction.executeAndReturnKey(params).intValue();

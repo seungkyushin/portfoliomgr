@@ -47,9 +47,23 @@ public class JoinController {
 		visiter.setOrganization(organization);
 		
 		String clientIp = logService.getClientIP(req);
-		visiterService.add(visiter,clientIp);
 		
-		return "main";
+		int result = visiterService.add(visiter,clientIp);
+		
+		if( result > 0) {
+			//< 생성 성공
+			req.setAttribute("Message", "성공적으로 가입되었습니다!");
+			return "main";
+		}else{
+			if( result == -1)
+				req.setAttribute("Message", "동일한 Email이 존재합니다.");
+			else
+				req.setAttribute("Message", "가입에 실패하였습니다.");
+			
+			return "join";
+			
+		}
+
 	}
 	
 	 

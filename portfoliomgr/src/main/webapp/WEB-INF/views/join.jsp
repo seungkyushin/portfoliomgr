@@ -24,9 +24,9 @@
 				<div id="main" class="wrapper style1">
 					<div class="container">
 						<header class="major">
-							<h2>방문자 가입</h2>
-                            <p>홈페이지 관리자는 해당 정보를 매일 삭제 합니다.</p>
-                            <p>형식 및 빈칸없이 모두 알맞게 작성해주시길 바랍니다.</p>
+							<h2>가입 하기</h2>
+                            <p>홈페이지 관리자는 해당 정보를 악용하지 않습니다.</p>
+                            <p>형식 및 빈칸없이 모두 알맞게 작성해주면 감사합니다.</p>
                             <p id="checkmsg"></p>
 						</header>
 

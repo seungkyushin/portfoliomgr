@@ -585,3 +585,10 @@
 	};
 
 })(jQuery);
+
+//< My Util Function
+//< MAX값은 제외하고 min~max값 전까지 값이 나온다.
+function makeRandom(min, max){
+    var RandVal = Math.random() * (max- min) + min;
+    return Math.floor(RandVal);
+}

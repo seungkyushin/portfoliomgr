@@ -56,5 +56,14 @@
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/template.js"></script>
 			<script src="assets/js/handlebars.min.js"></script>
+			
+			<script>
+				$(document).ready(function(){
+					var message = "${requestScope.Message}";
+					if( message )
+						alert(message);
+					
+				});
+			</script>
 	</body>
 </html>

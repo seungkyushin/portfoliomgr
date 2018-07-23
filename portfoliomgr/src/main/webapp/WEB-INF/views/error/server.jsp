@@ -23,8 +23,11 @@
 				<div id="main" class="wrapper style1">
 					<div class="container">
 						<header class="major">
-							<h2>Not Found Page</h2>
-                            <p>현재 요청하신 페이지를 찾을 수 없습니다.</p>
+							<h2>Internal Server Error</h2>
+                            <p>죄송합니다. 현재 서버에 문제가 발생하여 <br> 
+                            	정상적으로 페이지를 불러오지 못했습니다.</p>
+                            	
+                            <p>계속해서 동일한 문제가 확인된다면 덧글을 남겨주시길 바랍니다.</p>
                            	<a href="./main">이동..</p>
 						</header>
 

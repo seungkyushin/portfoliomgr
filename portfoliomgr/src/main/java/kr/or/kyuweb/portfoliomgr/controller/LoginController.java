@@ -41,6 +41,8 @@ public class LoginController {
 			cookies[i].setMaxAge(0);                        
 			res.addCookie(cookies[i]);     
 			}
+		
+		req.setAttribute("Message", "성공적으로 로그아웃 되셨습니다!");
 
 		return "main";
 	}

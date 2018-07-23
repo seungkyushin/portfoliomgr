@@ -57,7 +57,7 @@ public class UserCommentDao {
 	public int selectCountByPorjectId(int ProjectId){
 		Map<String,Integer> paramMap = new HashMap<>();
 		paramMap.put("ProjectId", ProjectId);
-		return jdbc.queryForObject("SELECT COUNT(*) FROM user_comment WHERE project_id=:ProjectId", paramMap, Integer.class);
+		return jdbc.queryForObject("SELECT COUNT(*) FROM user_comment WHERE project_id=:ProjectId AND show_check='off'", paramMap, Integer.class);
 	}
 	
 	public int insert(UserCommentDto data) {
