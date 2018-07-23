@@ -46,7 +46,7 @@ public class VisiterDao {
 		  return jdbc.query(SELECT_ALL,rowMapper);
 	 }
 	 
-	 public VisiterDto selectByEmail(String email){
+	 public VisiterDto selectByEmail(String email)  {
 		 Map<String,String> paramMap = new HashMap<>();
 		 paramMap.put("email", email);
 		 
@@ -54,6 +54,8 @@ public class VisiterDao {
 			 	return jdbc.queryForObject(SELECT_BY_EMAIL, paramMap, rowMapper);
 		 }catch(EmptyResultDataAccessException e)
 		 {
+			 return null;
+		 }catch(Exception e){
 			 return null;
 		 }
 

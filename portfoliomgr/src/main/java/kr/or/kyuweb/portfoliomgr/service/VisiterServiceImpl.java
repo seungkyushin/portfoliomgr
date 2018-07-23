@@ -6,13 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import kr.or.kyuweb.portfoliomgr.dao.LogDao;
 import kr.or.kyuweb.portfoliomgr.dao.VisiterDao;
-import kr.or.kyuweb.portfoliomgr.dto.LogDto;
 import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 
 @Service

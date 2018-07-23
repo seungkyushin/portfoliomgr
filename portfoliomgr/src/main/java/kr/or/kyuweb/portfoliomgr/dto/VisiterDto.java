@@ -55,10 +55,11 @@ public class VisiterDto {
 	}
 	@Override
 	public String toString() {
-		return "Visiter [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email
+		return "VisiterDto [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email
 				+ ", organization=" + organization + ", createDate=" + createDate + ", lastLoginDate=" + lastLoginDate
 				+ "]";
 	}
+	
 	
 	
 
