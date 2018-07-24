@@ -90,7 +90,16 @@
 	<span class="image fit main"><img src="{{image}}" alt="{{name}}" /></span>
 	<div class="col-5 col-4-medium col-12-xsmall"></div>
             <div class="col-2 col-4-medium col-12-xsmall">
-				<a href="{{url}}" target="_blank"><input type="button" id="sendBtn" class="button primary fit" value="DEMO"></a>
+								<c:choose>
+								    <c:when test="${empty sessionScope.email }">
+								        <a href="./login"><input type="button" class="button primary fit" value="로그인"></a>
+								    </c:when>
+								    <c:otherwise>
+								         <a href="{{url}}" target="_blank"><input type="button" id="sendBtn" class="button primary fit" value="프로젝트 열기"></a>
+								    </c:otherwise>
+								</c:choose>   
+
+		             
 			</div>
 			
 </div>

@@ -72,7 +72,14 @@
 						</header>
 						<p>{{description}}</p>
 						<ul class="actions">
-							<li><a href="./descriptionProject?id={{id}}" class="button">자세히 보기</a></li>
+								<c:choose>
+								    <c:when test="${empty sessionScope.email }">
+								        <li><a href="./login" class="button">자세히 보기</a></li>
+								    </c:when>
+								    <c:otherwise>
+								         <li><a href="./descriptionProject?id={{id}}" class="button">자세히 보기</a></li>
+								    </c:otherwise>
+								</c:choose>   
 						</ul>
 					</div>
 			</section>
