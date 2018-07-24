@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.kyuweb.portfoliomgr.dto.ProjectDto;
 import kr.or.kyuweb.portfoliomgr.dto.UserCommentDto;
-import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 import kr.or.kyuweb.portfoliomgr.service.LogService;
 import kr.or.kyuweb.portfoliomgr.service.ProjectService;
 import kr.or.kyuweb.portfoliomgr.service.UserCommentService;
-import kr.or.kyuweb.portfoliomgr.service.VisiterService;
 
 @Controller
 public class UserCommentController {

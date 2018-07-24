@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
@@ -46,13 +45,11 @@ public class VisiterServiceImpl implements VisiterService{
 
 	@Override
 	public int delete(VisiterDto data ,String ip) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int checkLogin(String email,String password ,String ip) {
-		// TODO Auto-generated method stub
 		
 		logService.recordLog("info", "로그인 시도 ", email,ip);
 		

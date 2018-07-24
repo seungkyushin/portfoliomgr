@@ -1,6 +1,5 @@
 package kr.or.kyuweb.portfoliomgr.dto;
 
-import java.util.Date;
 
 public class LogDto {
 

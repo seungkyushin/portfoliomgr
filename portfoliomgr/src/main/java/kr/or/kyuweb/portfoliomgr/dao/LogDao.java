@@ -1,6 +1,6 @@
 package kr.or.kyuweb.portfoliomgr.dao;
 
-import static kr.or.kyuweb.portfoliomgr.sql.VisiterSql.SELECT_ALL;
+import static kr.or.kyuweb.portfoliomgr.sql.VisiterSql.*;
 
 import java.util.List;
 

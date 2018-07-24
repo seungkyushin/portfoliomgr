@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import kr.or.kyuweb.portfoliomgr.dto.FileInfoDto;
@@ -17,15 +16,11 @@ import kr.or.kyuweb.portfoliomgr.dto.FileInfoDto;
 public class FileInfoDao {
 
 	private NamedParameterJdbcTemplate jdbc;
-	private SimpleJdbcInsert insertAction;
 	private RowMapper<FileInfoDto> rowMapper = new BeanPropertyRowMapper<>(FileInfoDto.class);
 	
 	public FileInfoDao(DataSource dataSource) {
 		 this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-		 this.insertAction = new SimpleJdbcInsert(dataSource)
-				 .withTableName("file_info")
-				 .usingGeneratedKeyColumns("id");
-		 
+
 	}
 	
 	public  FileInfoDto selectById(int id) {
