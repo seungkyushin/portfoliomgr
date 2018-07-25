@@ -77,6 +77,8 @@ public class LoginController {
 			info.setPath("/");
 			res.addCookie(info);   
 
+			req.setAttribute("Message", "로그인에 성공했습니다.");
+			
 			return "main";
 
 		}else {

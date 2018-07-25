@@ -1,29 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ include file="/common/header.jsp"%>
+
 <!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
-<title>KYU - 덧글</title>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
-<link rel="stylesheet" href="assets/css/main.css" />
-<noscript>
-	<link rel="stylesheet" href="assets/css/noscript.css" />
-</noscript>
-
-
+<title>KYU - COMMENT</title>
+	<meta charset="utf-8" />
+	<meta name="viewport"content="width=device-width, initial-scale=1, user-scalable=no" />	
+	<link rel="stylesheet" href="assets/css/action.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	
+		<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/template.js"></script>
+	<script src="assets/js/handlebars.min.js"></script>
 </head>
 <body class="is-preload">
 	<div id="page-wrapper">
-
+		<%@ include file="/common/header.jsp"%>
 		<!-- Main -->
 		<div id="main" class="wrapper style1">
 			<div class="container">
@@ -38,27 +42,21 @@
 					<form id="formData" method="GET" action="#">
 						<div class="row gtr-uniform gtr-50">
 							<div class="col-12">
-								<div id="score">	
-									<i class="fas fa-thumbs-up fa-2x" >
-										<input type="checkbox" id="score1" name="score" value="1" title="1점">
+								<div id="score">
+									<i class="fas fa-thumbs-up fa-2x"> <input type="checkbox"
+										id="score1" name="score" value="1" title="1점">
+									</i> <i class="fas fa-thumbs-up fa-2x"> <input type="checkbox"
+										id="score2" name="score" value="2" title="2점">
+									</i> <i class="fas fa-thumbs-up fa-2x"> <input type="checkbox"
+										id="score3" name="score" value="3" title="3점">
+									</i> <i class="fas fa-thumbs-up fa-2x"> <input type="checkbox"
+										id="score4" name="score" value="4" title="4점">
+									</i> <i class="fas fa-thumbs-up fa-2x"> <input type="checkbox"
+										id="score5" name="score" value="5" title="5점">
 									</i>
-									
-									<i class="fas fa-thumbs-up fa-2x" >
-										<input type="checkbox" id="score2" name="score" value="2" title="2점">
-									</i>
-									
-									<i class="fas fa-thumbs-up fa-2x">
-										<input type="checkbox" id="score3" name="score" value="3" title="3점">
-									</i>
-									<i class="fas fa-thumbs-up fa-2x" >
-										<input type="checkbox" id="score4" name="score" value="4" title="4점">
-									</i>
-									<i class="fas fa-thumbs-up fa-2x" >
-										<input type="checkbox" id="score5" name="score" value="5" title="5점">
-									</i> 
-									</div>
-								
-								
+								</div>
+
+
 							</div>
 
 							<div class="col-3">
@@ -77,14 +75,15 @@
 									rows="6"></textarea>
 							</div>
 							<div class="col-6 col-12-medium">
-								<input type="checkbox" id="showCheck" name="showCheck"> <label
-									for="showCheck">개발자에게만 보이게 하기</label>
+								<input type="checkbox" id="showCheck" name="showCheck">
+								<label for="showCheck">개발자에게만 보이게 하기</label>
 							</div>
 
 							<div class="col-8"></div>
 							<div class="col-4">
 								<ul class="actions">
-									<li><input type="button" id="sendBtn" value="확인" class="primary" /></li>
+									<li><input type="button" id="sendBtn" value="확인"
+										class="primary" /></li>
 									<li><input type="reset" value="초기화" /></li>
 								</ul>
 							</div>
@@ -94,81 +93,78 @@
 
 			</div>
 		</div>
-
-
-	</div>
-
+		<%@ include file="/common/footer.jsp"%>
+</div>
 <script>
-
 $(document).ready(function(){
-	
-	
+
 	//< 점수 
 	$("#score").on("click",function(event){
- 	 var clickedValue = event.target.firstElementChild.value;
-	  for(var index = 0; index < $("#score").children().length; index++ ){
+		var clickedValue = event.target.firstElementChild.value;
+		for (var index = 0; index < $("#score").children().length; index++) {
 			
-		 	if(index+1 <= clickedValue){
-		 		$(this).children().eq(index).css('color',"#e44c65");
-		 		continue;
-		 	}
-				 
-		 	$(this).children().eq(index).css('color',"rgba(255, 255, 255, 0.75)");
-		 } 
-	  
-		 $(this).children().eq(clickedValue-1).children().first().prop("checked", true);
+			if (index + 1 <= clickedValue) {
+				$(this).children().eq(index).css('color',"#e44c65");
+				continue;
+			}
 
- });
- 
+			$(this).children().eq(index).css('color',"rgba(255, 255, 255, 0.75)");
+		}
+
+		$(this).children().eq(clickedValue - 1).children().first().prop("checked", true);
+	});
 	
+	
+
+
 	//< 데이터 전송
-	$("#sendBtn").on("click",function(event){
-		 event.preventDefault();
-		 
-		 var form = $("#formData").serializeArray();
-		 var sendData = {};
-		 sendData['projectId'] = ${requestScope.projectId};
-		 sendData['visiter'] = "${sessionScope.email}";
-		 form.forEach(function(v){
-			 sendData[v.name] = v.value;
-		 });
-		 
-	
-			if( isCheckForm() == true ){
+	$("#sendBtn").on("click",function(event) {
+		event.preventDefault();
+
+		var form = $("#formData").serializeArray();
+		var sendData = {};
+		
+		sendData['projectId'] = "${requestScope.projectId}";
+		sendData['visiter'] = "${sessionScope.email}";
+		
+		form.forEach(function(v) {
+			sendData[v.name] = v.value;
+		});
+
+		if (isCheckForm() == true) {
 				$.ajax({
 					type : "POST",
 					url : "./addcomment",
 					data : sendData,
-					success : function(){
-					  	  var check = confirm("성공적으로 등록 되었습니다!\n 이전 페이지로 이동하시겠습니까?");
-					  			
-				      	  if(check){
-					      		location.replace('./descriptionProject?id=${requestScope.projectId}');
-				      	  }
-				      	  else {
-				      		location.href = './descriptionProject?id=${requestScope.projectId}';
-				      	  }
-					},
-					error : function(){
-						alert("실패");
-					}
-					
+					success : function() {
+							var check = confirm("성공적으로 등록 되었습니다!\n이전 페이지로 이동하시겠습니까?");
+							if (check) {
+								location.replace('./descriptionProject?id=${requestScope.projectId}');
+							} else {
+								location.href = './descriptionProject?id=${requestScope.projectId}';
+							}
+						},
+					error : function() {
+							alert("실패");
+						}
+
 				});
 			}
-				
-	 });
+		});
 	
-	
-	function isCheckForm(){
-		var result = true;
-
-		
-		return result;
-	}
+	//< 애니매이션을 다시 설정해주기위해 스크립트를 불러온다.
+	callScript("assets/js/main.js");
 	
 });
+
+
+function isCheckForm() {
+	var result = true;
+	return result;
+}
+
+
 </script>
 </body>
 </html>
 
-<%@ include file="/common/footer.jsp"%>

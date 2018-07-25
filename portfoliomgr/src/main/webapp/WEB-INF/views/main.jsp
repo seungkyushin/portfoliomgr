@@ -1,22 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp"%>
-
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>HOME</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+ <head>
+	<title>KYU - MAIN</title>
+	<meta charset="utf-8" />
+	<meta name="viewport"content="width=device-width, initial-scale=1, user-scalable=no" />		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/action.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload landing">
-		<div id="main-page-wrapper">
-             
-		
-			<!-- Banner -->
+		<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	
+		<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/template.js"></script>
+	<script src="assets/js/handlebars.min.js"></script>
+ </head>
+<body>
+<div id="main-page-wrapper"> 
+	<%@ include file="/common/header.jsp"%>
+		<div id="projectList-wrapper"class="content">
+ 			<!-- Banner -->
 				<section id="banner">
 					<div class="content">
 						<header>
@@ -29,8 +38,8 @@
 					</div>
 					<a href="#info" class="goto-next scrolly">Next</a>
 				</section>
-
-			<!-- One -->
+				
+					<!-- One -->
 		<section id="info" class="spotlight style1 bottom">
 					<span class="image fit main"><img src="images/pic02.jpg" alt="" /></span>
 					<div class="content">
@@ -55,91 +64,78 @@
 						</div>
 					</div>
 					<a href="#project-1" class="goto-next scrolly">Next</a>
-				</section> 
-				
-				
+				</section>
+			</div>
+		<%@ include file="/common/footer.jsp"%>		
+	</div>
+</body>
 
-	<!-- Two -->
-		</div>
-			<script type="template" id="template-project">
-			<section id="project-{{id}}" class="spotlight {{style}} {{direction}}">
-			
-					<span class="image fit main"><img src="{{image}}" alt="{{name}}" /></span>
-					<div class="content">
-						<header>
-							<h2>{{name}}</h2>
-							<p>{{subdescription}}</p>
-						</header>
-						<p>{{description}}</p>
-						<ul class="actions">
-								<c:choose>
-								    <c:when test="${empty sessionScope.email }">
-								        <li><a href="./login" class="button">자세히 보기</a></li>
-								    </c:when>
-								    <c:otherwise>
-								         <li><a href="./descriptionProject?id={{id}}" class="button">자세히 보기</a></li>
-								    </c:otherwise>
-								</c:choose>   
-						</ul>
-					</div>
-			</section>
-			</script>
-			
-			
-		<script>
-			$(document).ready(function(){
-				
-				 $.ajax({
-					type : "GET",
-					url : "./api/project?id=0",
-					success : function(response){
-							setProjectInfomation(response);
-						},
-					
-					error : function(){
-						console.log("에러");
+<script type="template" id="template-project">
+  <section id="project-{{id}}" class="spotlight {{style}} {{direction}}">
+	<span class="image fit main"><img src="{{image}}" alt="{{name}}" /></span>
+	<div class="content">
+		<header>
+			<h2>{{name}}</h2>
+			<p>{{subdescription}}</p>
+		</header>
+		<p>{{description}}</p>
+		<ul class="actions">
+			<c:choose>
+			    <c:when test="${empty sessionScope.email }">
+			        <li><a href="./login" class="button">자세히 보기</a></li>
+			    </c:when>
+			    <c:otherwise>
+			         <li><a href="./descriptionProject?id={{id}}" class="button">자세히 보기</a></li>
+			    </c:otherwise>
+			</c:choose>   
+		</ul>
+	</div>
+ </section>
+</script>
+<script>
+  $(document).ready(function(){
+	  
+		 $.ajax({
+			type : "GET",
+			url : "./api/project?id=0",
+			success : function(response){
+					setProjectInfomation(response);
+				},
+			error : function(){
+					console.log("에러");
 					}
-				}); 
-				
-			});
+			}); 
+}); 
 			
-			function setProjectInfomation(responseData){
-				responseData.projectList.forEach(function(v,i){
-						setProjectHTML(v,i);
-							
-				}); 
-				
-				//< 애니매이션을 다시 설정해주기위해 스크립트를 불러온다.
-				 $.getScript("assets/js/main.js", function(data, textStatus, jqxhr) {
-				});
-					 
-			}
-			
-			
-			//< 프로젝트의 HTML을 설정한다.
-			function setProjectHTML(responseData,childNum){
-				var projectInfo = responseData; 
-				var data = {};
-				
-				data['id'] = projectInfo.id;
-				data['name'] = projectInfo.name;
-				data['subdescription'] = projectInfo.subdescription;
-				data['description']  = projectInfo.description;
-				data['image'] = projectInfo.image;
-				data['url'] = projectInfo.url;
-				
-				
-				data['style'] = "style" + makeRandom(1,4);
-				var direction = ['right','left'];
-				data['direction'] = direction[ makeRandom(0,2)];
-				
-				
-				var resultHTML = templateParserAfter("#template-project",
-						data,"#main-page-wrapper");
+function setProjectInfomation(responseData){
+	responseData.projectList.forEach(function(v,i){
+			setProjectHTML(v,i);
+			}); 
 	
-			}
-		</script>
-	</body>
+	//< 애니매이션을 다시 설정해주기위해 스크립트를 불러온다.
+	 callScript("assets/js/main.js");
+}
+
+//< 프로젝트의 HTML을 설정한다.
+function setProjectHTML(responseData,childNum){
+		var projectInfo = responseData; 
+		var data = {};
+		
+		data['id'] = projectInfo.id;
+		data['name'] = projectInfo.name;
+		data['subdescription'] = projectInfo.subdescription;
+		data['description']  = projectInfo.description;
+		data['image'] = projectInfo.image;
+		data['url'] = projectInfo.url;
+			
+		data['style'] = "style" + makeRandom(1,4);
+		var direction = ['right','left'];
+		data['direction'] = direction[ makeRandom(0,2)];
+			
+		var resultHTML = templateParserAfter("#template-project", data,"#projectList-wrapper");
+}
+</script>
+		
 </html>
-				
- <%@ include file="/common/footer.jsp" %>
+
+

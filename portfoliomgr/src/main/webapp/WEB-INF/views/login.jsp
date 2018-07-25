@@ -1,24 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-     <%@ include file="/common/header.jsp" %>
 <!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 	<head>
-		<title>KYU - 로그인</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/action.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<title>KYU - LOGIN</title>
+	<meta charset="utf-8" />
+	<meta name="viewport"content="width=device-width, initial-scale=1, user-scalable=no" />		<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/action.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	
+		<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/template.js"></script>
+	<script src="assets/js/handlebars.min.js"></script>
+</head>
+	<body >
 		<div id="page-wrapper">
-
+			<%@ include file="/common/header.jsp"%>
 
 			<!-- Main -->
 				<div id="main" class="wrapper style1">
@@ -29,14 +35,12 @@
                          	<p id="errorMsg" style="color:#e44c65">${errorMessage}</p>
                          	<p id="checkmsg"></p>
 						</header>
-
-						<!-- Form -->
+					<!-- Form -->
 							<section>
 				    				<form id="formData" method="post" action="./logincheck">
 									<div class="row gtr-uniform gtr-50">
 
-                   
-
+   
                                         <div class="col-4 col-12-xsmall"></div> 
 										<div class="col-4 col-12-xsmall">
 											<input type="email" name="email" id="email" value="" placeholder="이메일" />
@@ -61,9 +65,10 @@
 							</section>
 					</div>
 				</div>
+				<%@ include file="/common/footer.jsp" %>
 		</div>
-		
-		<script>
+				
+<script>
 $(document).ready(function(){
 			
 
@@ -80,7 +85,8 @@ $(document).ready(function(){
 					}
 				 
 			 });
-			 
+			//< 애니매이션을 다시 설정해주기위해 스크립트를 불러온다.
+			 callScript("assets/js/main.js");					 
 });
 		 
 function isCheckForm(){
@@ -119,8 +125,7 @@ function startAnimation(elementName, type){
 				    });
 }
 			
-		</script>
-	</body>
+</script>
+</body>
 </html>
 
-<%@ include file="/common/footer.jsp" %>

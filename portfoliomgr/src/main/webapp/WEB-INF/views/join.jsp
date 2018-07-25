@@ -1,24 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-     <%@ include file="/common/header.jsp" %>
+     
 <!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
-		<title>KYU - 방문자 가입</title>
+		<title>KYU - VISITER</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/action.css" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<link rel="stylesheet" href="assets/css/action.css" />
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/template.js"></script>
+		<script src="assets/js/handlebars.min.js"></script>
+		
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
-
+			<%@ include file="/common/header.jsp" %>
 
 			<!-- Main -->
 				<div id="main" class="wrapper style1">
@@ -69,14 +75,15 @@
 										<ul class="actions stacked">
 											<li><input type="button" id="sendBtn" class="button primary fit" value="가입"></li>
 											</ul>
-            
+            						</div>
 								</form>
 							</section>
 					</div>
 				</div>
+				<%@ include file="/common/footer.jsp" %>
 		</div>
 		
-		<script>
+<script>
 		$(document).ready(function(){
 			
 			$("#sendBtn").on("click",function(event){
@@ -90,6 +97,8 @@
 	  
 			});
 
+			//< 애니매이션을 다시 설정해주기위해 스크립트를 불러온다.
+			 callScript("assets/js/main.js");
 		});
 		function isCheckForm(){
 						
@@ -133,7 +142,6 @@
 			    });
 		}
 		</script>
-	</body>
+</body>
 </html>
 
-<%@ include file="/common/footer.jsp" %>
