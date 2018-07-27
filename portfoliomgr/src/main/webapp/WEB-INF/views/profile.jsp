@@ -33,18 +33,41 @@
 							<h2>'신승규' 님 프로필</h2>
 							
 							<div class='table-wrapper'>
+								<form id="formData" method="post" action="./logincheck">
+						                                 
+                              
 								<table>
-									<tbody>
-									<c:forEach item="list" items="${visiter} ">
+									<tbody id="profile-table">
+									
 										<tr>
 												<td>이름</td>
-												<td>${list}</td>
-												<td>수정불가</td>
+												<td><input type="text" value="${visiter.name}" readonly></td>
 										</tr>
-									</c:forEach>
-	
+										<tr>
+												<td>이메일</td>
+												<td><input type="text" value="${visiter.email}" readonly></td>
+										</tr>
+										<tr>
+												<td>패스워드</td>
+												<td><input type="text" value="*****" id="password" name="password"></td>
+										</tr>
+										<tr>
+												<td>소속</td>
+												<td><input type="text" value="${visiter.organization}" id="organization" name="organization"></td>
+												
+										</tr>
+
 									</tbody>
 								</table>
+								
+								    
+										<ul class="actions stacked">
+											<li><input id="sendBtn" type="button" class="button primary fit" value="수정"></li>
+											</ul>
+            						
+								
+								
+							</form>
 							</div>
 					</div>
 				</section>
@@ -57,7 +80,15 @@
 
 <script>
 $(document).ready(function(){
-	
+
+	$("#profile-table").on("click",function(event){
+		
+		
+		if( event.target.className == "mody"){
+			console.log(event.target);
+			
+		}
+	})
 
 });
 

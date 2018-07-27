@@ -64,7 +64,8 @@
 										<ul class="actions stacked">
 											<li><input id="sendBtn" type="button" class="button primary fit" value="확인"></li>
 											</ul>
-            
+            						</div>
+            						</div>
 								</form>
 							</section>
 					</div>

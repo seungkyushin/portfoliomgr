@@ -1,7 +1,6 @@
 package kr.or.kyuweb.portfoliomgr.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,11 +22,8 @@ public class ProfileController {
 	@Autowired
 	VisiterService visiterService;
 	
-	
 	@GetMapping(path="/checkProfile")
 	public String showpage(HttpSession hSession, ModelMap modelMap) {
-		
-
 		if( hSession != null ) {
 			String email = (String)hSession.getAttribute("email");
 			
@@ -50,23 +46,13 @@ public class ProfileController {
 		VisiterDto visiter = visiterService.getVisiter(email);
 		
 		if( visiter.getPassword().equals(password) == true ) {
-			
-			
-			Map<String,Object> pramMap = new HashMap<String,Object>();
-			
-			pramMap.put("name", visiter.getName());
-			pramMap.put("email", visiter.getEmail());
-			pramMap.put("organization", visiter.getOrganization());
-			pramMap.put("password","");
-			
-			modelMap.addAttribute("visiter", pramMap);
-			
+			visiter.setPassword("");
+			modelMap.addAttribute("visiter", visiter);
 			return "profile";
 			
 		}else {
 			
 			redirectAttr.addFlashAttribute("errorMessage", "비밀번를 다시한번 확인하세요");
-
 			return "redirect:checkProfile";
 			
 		}
