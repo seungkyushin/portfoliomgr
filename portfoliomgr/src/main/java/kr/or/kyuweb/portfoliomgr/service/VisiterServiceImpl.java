@@ -49,7 +49,7 @@ public class VisiterServiceImpl implements VisiterService{
 	}
 
 	@Override
-	public int checkLogin(String email,String password ,String ip) {
+	public VisiterDto checkLogin(String email,String password ,String ip) {
 		
 		logService.recordLog("info", "로그인 시도 ", email,ip);
 		
@@ -63,12 +63,12 @@ public class VisiterServiceImpl implements VisiterService{
 			//< 로그
 			logService.recordLog("info", "로그인 성공", visiter.getEmail(),ip);
 			
-			return visiter.getId();
+			return visiter;
 			
 		}
 		
 		
-		return 0;
+		return null;
 	}
 
 	@Override

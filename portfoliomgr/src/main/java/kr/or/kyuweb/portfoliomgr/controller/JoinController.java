@@ -5,10 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 import kr.or.kyuweb.portfoliomgr.service.LogService;
@@ -30,7 +30,8 @@ public class JoinController {
 	
 	@PostMapping(path="/addvisiter")
 	public String addVisiter( @ModelAttribute VisiterDto visiter, 
-			HttpServletRequest req){
+			HttpServletRequest req,
+			ModelMap modelMap){
 		System.out.println("ViewPageController : /addVisiter");
 		
 		if("".equals(visiter.getOrganization()) == true)
@@ -42,13 +43,14 @@ public class JoinController {
 		
 		if( result > 0) {
 			//< 생성 성공
-			req.setAttribute("Message", "성공적으로 가입되었습니다!");
+			modelMap.addAttribute("ResultMessage", "성공적으로 가입되었습니다!");
+
 			return "main";
 		}else{
-			if( result == -1)
-				req.setAttribute("Message", "동일한 Email이 존재합니다.");
+			if( result == -1) 
+				modelMap.addAttribute("ResultMessage", "동일한 Email이 존재합니다.");
 			else
-				req.setAttribute("Message", "가입에 실패하였습니다.");
+				modelMap.addAttribute("ResultMessage", "가입에 실패하였습니다.");
 			
 			return "join";
 			

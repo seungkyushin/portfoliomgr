@@ -9,6 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/action.css" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/naver-style.css"/>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<!-- Scripts -->
 		<script src="assets/js/jquery.min.js"></script>
@@ -85,6 +86,7 @@
 		
 <script>
 		$(document).ready(function(){
+			startAnimation("#formData","bounceIn");
 			
 			$("#sendBtn").on("click",function(event){
 				
@@ -99,6 +101,11 @@
 
 			//< 애니매이션을 다시 설정해주기위해 스크립트를 불러온다.
 			 callScript("assets/js/main.js");
+			
+			 var checkMsg = "${ResultMessage}";
+			 if( checkMsg != ""){
+				 $(".popup_booking_wrapper").css("display","block");
+			 } 
 		});
 		function isCheckForm(){
 						

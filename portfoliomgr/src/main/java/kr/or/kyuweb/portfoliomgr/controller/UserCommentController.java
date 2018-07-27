@@ -1,9 +1,11 @@
 package kr.or.kyuweb.portfoliomgr.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,16 +39,25 @@ public class UserCommentController {
 		req.setAttribute("projectId", projectDto.getId());
 		return "comment";
 	}
-	
+					
 	@PostMapping("/addcomment")
 	public String addComment(@ModelAttribute UserCommentDto data,
-			@RequestParam(name="visiter") String email,
-			HttpServletRequest req) {
+			HttpSession sec,
+			HttpServletRequest req,
+			ModelMap modelMap) {
 		
 		String clientIp = logService.getClientIP(req);
-	
+		String email = (String)sec.getAttribute("email");
+		
 		System.out.println(data);
-		userCommentService.addUserComment(data,email,clientIp);
+		System.out.println(email);
+		
+		int reuslt = userCommentService.addUserComment(data,email,clientIp);
+
+		if( reuslt != 0 ) {
+			modelMap.addAttribute("url","./descriptionProject?id="+data.getProjectId());
+			modelMap.addAttribute("ResultMessage","덧글 남겨주셔서 감사합니다. 이전 페이지로 돌아갑니다.");
+		}
 		
 		return "comment";
 	}

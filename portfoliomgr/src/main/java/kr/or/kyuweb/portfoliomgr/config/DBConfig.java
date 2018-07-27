@@ -27,7 +27,7 @@ public class DBConfig implements TransactionManagementConfigurer{
 		ds.setUrl(url);
 		ds.setUsername(username);
 		ds.setPassword(password);
-		
+
 		return ds;
 	}
 	

@@ -10,6 +10,7 @@
 	<meta name="viewport"content="width=device-width, initial-scale=1, user-scalable=no" />	
 	<link rel="stylesheet" href="assets/css/action.css" />
 	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/naver-style.css"/>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
@@ -39,7 +40,8 @@
 				<!-- FORM -->
 				<section>
 					<h3>평점과 하고싶은 말을 남겨주세요!</h3>
-					<form id="formData" method="GET" action="#">
+					<form id="formData" method="POST" action="./addcomment">
+						<input type="hidden" id="projectId" name="projectId" value="${requestScope.projectId}">
 						<div class="row gtr-uniform gtr-50">
 							<div class="col-12">
 								<div id="score">
@@ -121,39 +123,20 @@ $(document).ready(function(){
 	$("#sendBtn").on("click",function(event) {
 		event.preventDefault();
 
-		var form = $("#formData").serializeArray();
-		var sendData = {};
-		
-		sendData['projectId'] = "${requestScope.projectId}";
-		sendData['visiter'] = "${sessionScope.email}";
-		
-		form.forEach(function(v) {
-			sendData[v.name] = v.value;
-		});
+		if( isCheckForm() == true )
+		 {
+			$("#formData").submit();
+		 }
 
-		if (isCheckForm() == true) {
-				$.ajax({
-					type : "POST",
-					url : "./addcomment",
-					data : sendData,
-					success : function() {
-							var check = confirm("성공적으로 등록 되었습니다!\n이전 페이지로 이동하시겠습니까?");
-							if (check) {
-								location.replace('./descriptionProject?id=${requestScope.projectId}');
-							} else {
-								location.href = './descriptionProject?id=${requestScope.projectId}';
-							}
-						},
-					error : function() {
-							alert("실패");
-						}
-
-				});
-			}
-		});
+		}); 
 	
 	//< 애니매이션을 다시 설정해주기위해 스크립트를 불러온다.
 	callScript("assets/js/main.js");
+	
+	 var checkMsg = "${ResultMessage}";
+	 if( checkMsg != ""){
+		 $(".popup_booking_wrapper").css("display","block");
+	 } 
 	
 });
 

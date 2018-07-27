@@ -10,19 +10,43 @@
 	</h1>
 	<nav id="nav">
 		<ul>
-			<li><a href="./main">Home</a></li>
-			<li><a href="./description">Description</a></li>
-
+			<li><a href="./description">설명</a></li>
 			<c:choose>
-				<c:when test="${empty sessionScope.email }">
-					<li><a href="./login" class="button primary">Login</a></li>
+				<c:when test="${empty sessionScope.email}">
+					<li><a href="./login" class="button primary">로그인</a></li>
 				</c:when>
 				<c:otherwise>
-					<li><a href="./logout" class="button primary">Logout</a></li>
+					<li><a href="#">프로필</a></li>
+					<li><a href="./logout" class="button primary">로그 아웃</a></li>
 				</c:otherwise>
 			</c:choose>
 
 		</ul>
 	</nav>
 </header>
+<div class="popup_booking_wrapper" style="display:none">
+			<div class="dimm_dark" style="display:block"></div>
+			<div class="popup_booking refund">
+			
+				<div class="nomember_alert">
+					<p style="color:white">${ResultMessage}</p>
+				</div>
+		
+					<a href="javascript:popup('${url}')" class="button small"><span>확인</span></a>
+				</div>
+		</div>
+<script>
+function popup(url){
+	
+		 $(".popup_booking_wrapper").css("display","none");
+		 
+		 if(url != ""){
+			 location.href = url;
+		 }
+		 
+	}
+</script>
+
+	
+
 

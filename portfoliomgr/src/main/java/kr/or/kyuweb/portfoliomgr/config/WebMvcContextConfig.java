@@ -11,8 +11,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+
 @Configuration
-@EnableWebMvc
+@EnableWebMvc //<DispatcherServlet의 RequestMappingHandlerMapping, RequestMappingHandlerAdapter, ExceptionHandlerExceptionResolver, MessageConverter 등 Web에 필요한 빈들을 대부분 자동으로 설정해준다.
 @ComponentScan(basePackages = { "kr.or.kyuweb.portfoliomgr.controller" })
 public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 

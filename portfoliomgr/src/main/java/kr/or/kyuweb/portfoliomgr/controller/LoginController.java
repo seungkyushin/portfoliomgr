@@ -8,11 +8,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 import kr.or.kyuweb.portfoliomgr.service.VisiterService;
 
 
@@ -33,7 +35,8 @@ public class LoginController {
 	@GetMapping(path="/logout")
 	public String logout(HttpSession session,
 			HttpServletRequest req,
-			HttpServletResponse res) {
+			HttpServletResponse res,
+			ModelMap modelMap) {
 		
 		session.invalidate();
 		Cookie[] cookies = req.getCookies();
@@ -42,7 +45,7 @@ public class LoginController {
 			res.addCookie(cookies[i]);     
 			}
 		
-		req.setAttribute("Message", "성공적으로 로그아웃 되셨습니다!");
+		modelMap.addAttribute("ResultMessage", "성공적으로 로그아웃 되셨습니다!");
 
 		return "main";
 	}
@@ -54,30 +57,26 @@ public class LoginController {
 			HttpSession session,
 			RedirectAttributes redirectAttr,
 			HttpServletRequest req,
-			HttpServletResponse res) {
+			HttpServletResponse res,
+			ModelMap modelMap) {
 	
-		
-		if( session.isNew() == true ) {
-			System.out.println("sesstion true");
-		}else
-		{
-			System.out.println("sesstion false");
-		}
-		
+
 		String clientIp = getClientIP(req);
 		
-		int UserId = visiterService.checkLogin(email, password, clientIp);
-		if( UserId != 0 ) {
+		VisiterDto visiter = visiterService.checkLogin(email, password, clientIp);
+		if( visiter != null ) {
 			
 			session.setAttribute("email", email);
-				
+			session.setMaxInactiveInterval(10*60); // 10분 유지
+
+			 
 			Cookie info = new Cookie("email", email);    // 쿠키를 생성한다. 이름:testCookie, 값 : Hello Cookie
 			
-			info.setMaxAge(60*60);                                 // 쿠키의 유효기간을 365일로 설정한다.
+			info.setMaxAge(60*60*10);                                 // 쿠키의 유효기간을 365일로 설정한다.
 			info.setPath("/");
 			res.addCookie(info);   
-
-			req.setAttribute("Message", "로그인에 성공했습니다.");
+			
+			modelMap.addAttribute("ResultMessage","'" + visiter.getName() +"'님 반갑습니다!");
 			
 			return "main";
 

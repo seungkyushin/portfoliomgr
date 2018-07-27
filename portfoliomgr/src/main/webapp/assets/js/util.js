@@ -596,3 +596,9 @@ function makeRandom(min, max){
 function callScript(path){
 	$.getScript(path, function(data, textStatus, jqxhr) {});
 }
+
+function startAnimation(elementName, type){
+	$(elementName).removeClass().addClass(type + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+	      $(this).removeClass();
+	    });
+}

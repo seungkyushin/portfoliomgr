@@ -9,6 +9,8 @@
 	<meta name="viewport"content="width=device-width, initial-scale=1, user-scalable=no" />		<link rel="stylesheet" href="assets/css/main.css" />
 	<link rel="stylesheet" href="assets/css/action.css" />
 	<link rel="stylesheet" href="assets/css/main.css" />
+	
+	
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	
 		<!-- Scripts -->
@@ -21,6 +23,8 @@
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/template.js"></script>
 	<script src="assets/js/handlebars.min.js"></script>
+
+	
 </head>
 	<body >
 		<div id="page-wrapper">
@@ -67,10 +71,11 @@
 				</div>
 				<%@ include file="/common/footer.jsp" %>
 		</div>
-				
+
 <script>
+
 $(document).ready(function(){
-			
+	startAnimation("#formData","bounceIn");
 
 			$("#sendBtn").on("click",function(event){
 				 
@@ -118,13 +123,7 @@ function isCheckForm(){
 				
 				return result;
 }
-			
-function startAnimation(elementName, type){
-				$(elementName).removeClass().addClass(type + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-				      $(this).removeClass();
-				    });
-}
-			
+		
 </script>
 </body>
 </html>

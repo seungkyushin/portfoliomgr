@@ -8,7 +8,8 @@
 	<meta name="viewport"content="width=device-width, initial-scale=1, user-scalable=no" />		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/action.css" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="assets/css/naver-style.css"/>
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	
 		<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
@@ -66,6 +67,8 @@
 					<a href="#project-1" class="goto-next scrolly">Next</a>
 				</section>
 			</div>
+	
+		
 		<%@ include file="/common/footer.jsp"%>		
 	</div>
 </body>
@@ -80,21 +83,14 @@
 		</header>
 		<p>{{description}}</p>
 		<ul class="actions">
-			<c:choose>
-			    <c:when test="${empty sessionScope.email }">
-			        <li><a href="./login" class="button">자세히 보기</a></li>
-			    </c:when>
-			    <c:otherwise>
-			         <li><a href="./descriptionProject?id={{id}}" class="button">자세히 보기</a></li>
-			    </c:otherwise>
-			</c:choose>   
+	       <li><a href="./descriptionProject?id={{id}}" class="button">자세히 보기</a></li>
 		</ul>
 	</div>
  </section>
 </script>
 <script>
   $(document).ready(function(){
-	  
+	 	  
 		 $.ajax({
 			type : "GET",
 			url : "./api/project?id=0",
@@ -105,6 +101,11 @@
 					console.log("에러");
 					}
 			}); 
+		 
+		 var checkMsg = "${ResultMessage}";
+		 if( checkMsg != ""){
+			 $(".popup_booking_wrapper").css("display","block");
+		 } 
 }); 
 			
 function setProjectInfomation(responseData){
