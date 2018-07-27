@@ -16,7 +16,7 @@
 					<li><a href="./login" class="button primary">로그인</a></li>
 				</c:when>
 				<c:otherwise>
-					<li><a href="#">프로필</a></li>
+					<li><a href="./checkProfile">프로필</a></li>
 					<li><a href="./logout" class="button primary">로그 아웃</a></li>
 				</c:otherwise>
 			</c:choose>

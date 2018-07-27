@@ -74,4 +74,35 @@ public class ApiController {
 		return resultMap;
 	}
 	
+	@GetMapping(path="/profile")
+	public Map<String, Object> getProfileList(@RequestParam(name="projectId") int projectId,
+			@RequestParam(name="start") int start
+			){		
+		Map<String, Object> resultMap = new HashMap<>();
+		List<Object> paramList = new ArrayList<>();
+		
+		List<UserCommentDto> userCommentDto = userCommentService.getUserCommentByProjectId(projectId,start);
+		
+		for( UserCommentDto data : userCommentDto) {
+			VisiterDto visiter = visiterService.getVisiter(data.getVisiterId());
+			Map<String,Object> paramMap = new HashMap<>();
+			paramMap.put("visiterEmail", visiter.getEmail());
+			paramMap.put("content", data.getContent());
+			paramMap.put("type", data.getType());
+			paramMap.put("score", data.getScore());
+			paramMap.put("date", data.getCreateDate());
+			
+			paramList.add(paramMap);
+		}
+		
+		
+		resultMap.put("comments", paramList);
+		resultMap.put("allCount",userCommentService.getUserCommentCount(projectId) );
+		resultMap.put("avgScore",userCommentService.getUserCommentAvgScore(projectId) );
+		resultMap.put("currentPage",start );
+		
+		
+		return resultMap;
+	}
+	
 }
