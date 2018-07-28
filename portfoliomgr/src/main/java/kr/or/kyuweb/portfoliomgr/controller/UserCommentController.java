@@ -25,12 +25,10 @@ public class UserCommentController {
 	
 	@Autowired
 	ProjectService projectService;
-		
-	@Autowired
-	LogService logService;
+	
 	
 	@GetMapping("/comment")
-	public String showpage(@RequestParam(name="projectId") int projectId,
+	public String showPage(@RequestParam(name="projectId") int projectId,
 			HttpServletRequest req) {
 		
 		ProjectDto projectDto = projectService.getProjectDto(projectId);
@@ -42,11 +40,10 @@ public class UserCommentController {
 					
 	@PostMapping("/addcomment")
 	public String addComment(@ModelAttribute UserCommentDto data,
-			HttpSession sec,
 			HttpServletRequest req,
+			HttpSession sec,
 			ModelMap modelMap) {
-		
-		String clientIp = logService.getClientIP(req);
+		String clientIp = (String)req.getAttribute("clientIp");
 		String email = (String)sec.getAttribute("email");
 		
 		System.out.println(data);

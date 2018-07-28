@@ -4,6 +4,8 @@
 
 
 <!DOCTYPE HTML>
+<html>
+<body>
 <header id="header">
 	<h1 id="logo">
 		<a href="./main">KYU</a>
@@ -11,8 +13,10 @@
 	<nav id="nav">
 		<ul>
 			<li><a href="./description">설명</a></li>
+			
 			<c:choose>
 				<c:when test="${empty sessionScope.email}">
+					<li><a href="./join">가입하기</a></li>
 					<li><a href="./login" class="button primary">로그인</a></li>
 				</c:when>
 				<c:otherwise>
@@ -29,23 +33,25 @@
 			<div class="popup_booking refund">
 			
 				<div class="nomember_alert">
-					<p style="color:white">${ResultMessage}</p>
-				</div>
-		
-					<a href="javascript:popup('${url}')" class="button small"><span>확인</span></a>
+			
+					<c:if test="${!empty ResultMessage}">
+						<p style="color:white">${ResultMessage}</p>
+					</c:if>
+				
+					<a href="javascript:disablePopup('${url}')" class="button small"><span>확인</span></a>
 				</div>
 		</div>
+</div>
+</body>
+
 <script>
-function popup(url){
-	
-		 $(".popup_booking_wrapper").css("display","none");
-		 
-		 if(url != ""){
-			 location.href = url;
-		 }
-		 
-	}
+$(document).ready(function(){
+	 //< 팝업 메시지가 있다면 출력
+	 setPopup("${ResultMessage}");
+});
 </script>
+</html>
+
 
 	
 

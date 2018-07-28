@@ -6,10 +6,12 @@
 	<title>KYU - MAIN</title>
 	<meta charset="utf-8" />
 	<meta name="viewport"content="width=device-width, initial-scale=1, user-scalable=no" />		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/action.css" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/naver-style.css"/>
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" href="assets/css/action.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/popup.css"/>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	
 		<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
@@ -91,6 +93,7 @@
 <script>
   $(document).ready(function(){
 	 	  
+	  //< 프로젝트 정보를 갱신한다.
 		 $.ajax({
 			type : "GET",
 			url : "./api/project?id=0",
@@ -102,10 +105,6 @@
 					}
 			}); 
 		 
-		 var checkMsg = "${ResultMessage}";
-		 if( checkMsg != ""){
-			 $(".popup_booking_wrapper").css("display","block");
-		 } 
 }); 
 			
 function setProjectInfomation(responseData){

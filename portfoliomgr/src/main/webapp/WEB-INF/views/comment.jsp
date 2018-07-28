@@ -10,7 +10,7 @@
 	<meta name="viewport"content="width=device-width, initial-scale=1, user-scalable=no" />	
 	<link rel="stylesheet" href="assets/css/action.css" />
 	<link rel="stylesheet" href="assets/css/main.css" />
-	<link rel="stylesheet" href="assets/css/naver-style.css"/>
+	<link rel="stylesheet" href="assets/css/popup.css"/>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
@@ -35,7 +35,7 @@
 				<header class="major">
 					<h2>${requestScope.name}</h2>
 					<p>덧글은 개발자에게 큰 힘이 됩니다!!</p>
-
+					<p id="checkmsg"></p>
 				</header>
 				<!-- FORM -->
 				<section>
@@ -61,7 +61,7 @@
 
 							</div>
 
-							<div class="col-3">
+							<div class="col-5">
 								<select name="type" id="type">
 									<option value="0">- 덧글의 분류 -</option>
 									<option value="응원">응원</option>
@@ -133,16 +133,27 @@ $(document).ready(function(){
 	//< 애니매이션을 다시 설정해주기위해 스크립트를 불러온다.
 	callScript("assets/js/main.js");
 	
-	 var checkMsg = "${ResultMessage}";
-	 if( checkMsg != ""){
-		 $(".popup_booking_wrapper").css("display","block");
-	 } 
-	
 });
 
 
 function isCheckForm() {
+	var content = $("#content").val();
+	var checkMsgHTML = "";
 	var result = true;
+	
+	$("#checkmsg").html("");
+	
+	if( content.length <= 0 ){
+		checkMsgHTML += " [<strong style='color:#e44c65'>내용</strong>] "
+		startAnimation("#content","shake");
+		result = false;
+	}
+	
+	if( result == false){
+		checkMsgHTML += "를 확인해 주세요!";
+		$("#checkmsg").html(checkMsgHTML);
+	}
+	
 	return result;
 }
 

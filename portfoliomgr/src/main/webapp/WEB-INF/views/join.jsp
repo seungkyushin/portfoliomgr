@@ -7,21 +7,23 @@
 		<title>KYU - VISITER</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/action.css" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/naver-style.css"/>
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" href="assets/css/action.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/popup.css"/>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	
 		<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/jquery.scrolly.min.js"></script>
-		<script src="assets/js/jquery.dropotron.min.js"></script>
-		<script src="assets/js/jquery.scrollex.min.js"></script>
-		<script src="assets/js/browser.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
-		<script src="assets/js/template.js"></script>
-		<script src="assets/js/handlebars.min.js"></script>
-		
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/template.js"></script>
+	<script src="assets/js/handlebars.min.js"></script>
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
@@ -44,7 +46,7 @@
 
                                         <div class="col-4 col-12-xsmall"></div> 
 										<div class="col-4 col-12-xsmall">
-											<input type="text" name="name" id="name" value="" placeholder="성함" />
+											<input type="text" name="name" id="name" value="" placeholder="성함" maxlength="10"/>
                                         </div>
                                         <div class="col-4 col-12-xsmall"></div> 
                                      
@@ -52,7 +54,7 @@
 
                                         <div class="col-4 col-12-xsmall"></div> 
 										<div class="col-4 col-12-xsmall">
-											<input type="email" name="email" id="email" value="" placeholder="이메일" />
+											<input type="email" name="email" id="email" value="" placeholder="이메일" maxlength="50" />
                                         	
                                         </div>
                                         <div class="col-4 col-12-xsmall"></div> 
@@ -60,13 +62,13 @@
                                         
                                         <div class="col-4 col-12-xsmall"></div> 
 										<div class="col-4 col-12-xsmall">
-											<input type="password" name="password" id="password" value="" placeholder="비밀번호" />
+											<input type="password" name="password" id="password" value="" placeholder="비밀번호"  maxlength="21"/>
                                         </div>
                                         <div class="col-4 col-12-xsmall"></div> 
 									
                                         <div class="col-4 col-12-xsmall"></div> 
 										<div class="col-4 col-12-xsmall">
-											<input type="text" name="organization" id="organization" value="" placeholder="소속" />
+											<input type="text" name="organization" id="organization" value="" placeholder="소속"  maxlength="20" />
                                         </div>
                                         <div class="col-4 col-12-xsmall"></div> 
                                                                 
@@ -86,27 +88,30 @@
 		
 <script>
 		$(document).ready(function(){
+			//< 폼태그 애니메이션 설정
 			startAnimation("#formData","bounceIn");
 			
 			$("#sendBtn").on("click",function(event){
-				
 				event.preventDefault();
-				
-				if( isCheckForm() == true )
-				 {
-					$("#formData").submit();
-				 }
-	  
+				login();
 			});
+			
+			$("#formData").keypress(function (e) {
+		        if (e.which == 13){
+		        	login();
+		        }
+		    });
 
 			//< 애니매이션을 다시 설정해주기위해 스크립트를 불러온다.
 			 callScript("assets/js/main.js");
-			
-			 var checkMsg = "${ResultMessage}";
-			 if( checkMsg != ""){
-				 $(".popup_booking_wrapper").css("display","block");
-			 } 
 		});
+		
+		function login(){
+			if( isCheckForm() == true )
+			 {
+				$("#formData").submit();
+			 }
+		}
 		function isCheckForm(){
 						
 			var name = $("#name").val();
@@ -137,8 +142,11 @@
 				result = false;
 			}
 
-			checkMsgHTML += "를 확인해 주세요!";
-			$("#checkmsg").html(checkMsgHTML);
+			
+			if( result == false){
+				checkMsgHTML += "를 확인해 주세요!";
+				$("#checkmsg").html(checkMsgHTML);
+			}
 			
 			return result;
 		}

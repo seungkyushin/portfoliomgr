@@ -9,7 +9,8 @@
 	<meta name="viewport"content="width=device-width, initial-scale=1, user-scalable=no" />		<link rel="stylesheet" href="assets/css/main.css" />
 	<link rel="stylesheet" href="assets/css/action.css" />
 	<link rel="stylesheet" href="assets/css/main.css" />
-	
+	<link rel="stylesheet" href="assets/css/popup.css"/>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	
@@ -23,8 +24,6 @@
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/template.js"></script>
 	<script src="assets/js/handlebars.min.js"></script>
-
-	
 </head>
 	<body >
 		<div id="page-wrapper">
@@ -47,14 +46,14 @@
    
                                         <div class="col-4 col-12-xsmall"></div> 
 										<div class="col-4 col-12-xsmall">
-											<input type="email" name="email" id="email" value="" placeholder="이메일" />
+											<input type="email" name="email" id="email" value="" placeholder="이메일"  maxlength="50"/>
                                         </div>
                                         <div class="col-4 col-12-xsmall"></div> 
                                         
                                         
                                         <div class="col-4 col-12-xsmall"></div> 
 										<div class="col-4 col-12-xsmall">
-											<input type="password" name="password" id="password" value="" placeholder="비밀번호" />
+											<input type="password" name="password" id="password" value="" placeholder="비밀번호"  maxlength="20"/>
                                         </div>
                                         <div class="col-4 col-12-xsmall"></div> 
 									
@@ -82,19 +81,30 @@ $(document).ready(function(){
 				 
 				 event.preventDefault();
 					
-					if( isCheckForm() == true )
-					 {
-						$("#formData").submit();
-					 }
-					else{
-							$("#errorMsg").text("");
-					}
+				 login();
 				 
 			 });
+			
+			$("#formData").keypress(function (e) {
+		        if (e.which == 13){
+		        	login();
+		        }
+		    });
+				
 			//< 애니매이션을 다시 설정해주기위해 스크립트를 불러온다.
 			 callScript("assets/js/main.js");					 
 });
-		 
+function login(){
+	
+	if( isCheckForm() == true )
+	 {
+		$("#formData").submit();
+	 }
+	else{
+		$("#errorMsg").text("");
+	}
+	
+}
 function isCheckForm(){
 				
 				var password =  $("#password").val();
@@ -119,8 +129,10 @@ function isCheckForm(){
 					result = false;
 				}
 				
-				checkMsgHTML += "를 확인해 주세요!";
-				$("#checkmsg").html(checkMsgHTML);
+				if( result == false){
+					checkMsgHTML += "를 확인해 주세요!";
+					$("#checkmsg").html(checkMsgHTML);
+				}
 				
 				return result;
 }

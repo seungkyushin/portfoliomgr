@@ -602,3 +602,21 @@ function startAnimation(elementName, type){
 	      $(this).removeClass();
 	    });
 }
+
+
+function disablePopup(url){
+
+		 $(".popup_booking_wrapper").css("display","none");
+		 
+		 if(url != ""){
+			 location.href = url;
+		 }	 
+}
+
+function setPopup(ResultMsg){
+	if( ResultMsg == "")
+		return;
+	
+	 $(".popup_booking_wrapper").css("display","block");
+}
+

@@ -27,8 +27,7 @@ public class LoginController {
 	
 	
 	@GetMapping(path="/login")
-	public String showpage() {
-		
+	public String showPage() {
 		return "login";
 	}
 	
@@ -59,20 +58,20 @@ public class LoginController {
 			HttpServletRequest req,
 			HttpServletResponse res,
 			ModelMap modelMap) {
-	
-
-		String clientIp = getClientIP(req);
 		
+		String clientIp = (String)req.getAttribute("clientIp");
+
 		VisiterDto visiter = visiterService.checkLogin(email, password, clientIp);
+		
 		if( visiter != null ) {
 			
 			session.setAttribute("email", email);
 			session.setMaxInactiveInterval(10*60); // 10분 유지
 
 			 
-			Cookie info = new Cookie("email", email);    // 쿠키를 생성한다. 이름:testCookie, 값 : Hello Cookie
+			Cookie info = new Cookie("email", email);    // 쿠키를 생성
 			
-			info.setMaxAge(60*60*10);                                 // 쿠키의 유효기간을 365일로 설정한다.
+			info.setMaxAge(60*60*10);                                 // 쿠키의 유효기간
 			info.setPath("/");
 			res.addCookie(info);   
 			
@@ -89,29 +88,6 @@ public class LoginController {
 		}
 		
 	}
-	
-	
-	 public String getClientIP(HttpServletRequest request) {
-
-	     String ip = request.getHeader("X-FORWARDED-FOR"); 
-	     
-	     if (ip == null || ip.length() == 0) {
-	         ip = request.getHeader("Proxy-Client-IP");
-	     }
-
-	     if (ip == null || ip.length() == 0) {
-	         ip = request.getHeader("WL-Proxy-Client-IP");  // 웹로직
-	     }
-
-	     if (ip == null || ip.length() == 0) {
-	         ip = request.getRemoteAddr() ;
-	     }
-	     
-	     return ip;
-
-	 }
-
-	
 	
 
 }

@@ -81,4 +81,16 @@ public class VisiterServiceImpl implements VisiterService{
 		return visiterDao.selectById(id);
 	}
 
+	@Override
+	public int update(VisiterDto data, String ip) {
+		String email = data.getEmail();
+		String password = data.getPassword();
+		String organization = data.getOrganization();
+
+		//< 로그
+		logService.recordLog("update", "정보 갱신 성공", email,ip);
+		
+		return visiterDao.updateInfo(email,password,organization);
+	}
+
 }

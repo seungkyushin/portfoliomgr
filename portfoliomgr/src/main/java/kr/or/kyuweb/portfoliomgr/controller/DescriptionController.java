@@ -16,26 +16,15 @@ import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 public class DescriptionController {
 
 	@GetMapping(path="/description")
-	public String showpage() {
+	public String showPage() {
 		return "description";
 	}
 	
-
 	@GetMapping(path="/descriptionProject")
 	public String showDescriptionProjectPage(@RequestParam(name="id") int projectId,
-			HttpServletRequest req,
-			ModelMap modelMap,
-			HttpSession sec) {
+			ModelMap modelMap) {
 		modelMap.addAttribute("projectId", projectId);
 
-		
-		if( sec != null ) {
-			String email = (String)sec.getAttribute("email");
-			
-			if( email == null || "".equals(email) ) { 
-				modelMap.addAttribute("ResultMessage","로그인을 하셔야 원활한 이용이 가능합니다.");
-			}
-		}
 		return "descriptionProject";
 	}
 	

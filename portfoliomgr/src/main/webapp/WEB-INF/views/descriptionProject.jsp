@@ -9,8 +9,9 @@
 	<meta name="viewport"content="width=device-width, initial-scale=1, user-scalable=no" />		
 	<link rel="stylesheet" href="assets/css/action.css" />
 	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/popup.css"/>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-	<link rel="stylesheet" href="assets/css/naver-style.css"/>
+	
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	
 		<!-- Scripts -->
@@ -38,14 +39,7 @@
 							<div>
 								
 									<h3>방문자 한줄평
-										<c:choose>
-								    		<c:when test="${empty sessionScope.email }">
-								      		  <a title="덧글달기전 로그인" href="./login" ><i style="float:right;clear:both" class="fas fa-comment-alt fa-2x"></i></a>   
-								   			 </c:when>
-								   		 <c:otherwise>
-								          		<a title="덧글달기" href="./comment?projectId=${requestScope.projectId}"><i style="float:right;clear:both" class="fas fa-comment-alt fa-2x"></i></a>
-								    		</c:otherwise>
-										</c:choose>   								
+								     		<a title="덧글달기" href="./comment?projectId=${requestScope.projectId}"><i style="float:right;clear:both" class="fas fa-comment-alt fa-2x"></i></a>				
 									</h3>
 									
 								<span style="float:right"class="join_count"><strong><em id="avgScore">0/5.0</em></strong> | <em id="maxCount">0</em>건 등록</span> 

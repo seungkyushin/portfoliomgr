@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 import kr.or.kyuweb.portfoliomgr.service.LogService;
@@ -20,24 +21,22 @@ public class JoinController {
 	@Autowired
 	VisiterService visiterService;
 	
-	@Autowired
-	LogService logService;
 	
 	@GetMapping(path="/join")
-	public String showpage() {
+	public String showPage() {
 		return "join";
 	}
 	
 	@PostMapping(path="/addvisiter")
-	public String addVisiter( @ModelAttribute VisiterDto visiter, 
+	public String addVisiter( @ModelAttribute VisiterDto visiter,
 			HttpServletRequest req,
 			ModelMap modelMap){
 		System.out.println("ViewPageController : /addVisiter");
 		
+		String clientIp = (String)req.getAttribute("clientIp");
+		
 		if("".equals(visiter.getOrganization()) == true)
 			visiter.setOrganization("없음");
-		
-		String clientIp = logService.getClientIP(req);
 		
 		int result = visiterService.add(visiter,clientIp);
 		
