@@ -28,6 +28,7 @@
 <div id="main-page-wrapper"> 
 	<%@ include file="/common/header.jsp"%>
 		<div id="projectList-wrapper"class="content">
+			
  			<!-- Banner -->
 				<section id="banner">
 					<div class="content">
@@ -104,7 +105,7 @@
 					console.log("에러");
 					}
 			}); 
-		 
+	  
 }); 
 			
 function setProjectInfomation(responseData){
@@ -133,6 +134,11 @@ function setProjectHTML(responseData,childNum){
 		data['direction'] = direction[ makeRandom(0,2)];
 			
 		var resultHTML = templateParserAfter("#template-project", data,"#projectList-wrapper");
+		
+		$("#nav-projectList").append(function(){
+			var html = "<li><a href='#project-" + projectInfo.id + "' class='scrolly'>" + projectInfo.name +"</a></li>"; 
+			return  html;
+		});
 }
 </script>
 		

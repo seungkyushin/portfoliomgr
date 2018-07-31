@@ -42,14 +42,14 @@ public class JoinController {
 		
 		if( result > 0) {
 			//< 생성 성공
-			modelMap.addAttribute("ResultMessage", "성공적으로 가입되었습니다!");
+			req.setAttribute("resultMsg","성공적으로 가입되었습니다!");
 
 			return "main";
 		}else{
 			if( result == -1) 
-				modelMap.addAttribute("ResultMessage", "동일한 Email이 존재합니다.");
+				req.setAttribute("resultMsg", "동일한 Email이 존재합니다.");
 			else
-				modelMap.addAttribute("ResultMessage", "가입에 실패하였습니다.");
+				req.setAttribute("resultMsg", "가입에 실패하였습니다.");
 			
 			return "join";
 			

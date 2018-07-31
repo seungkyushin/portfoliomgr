@@ -3,6 +3,9 @@
 <!DOCTYPE HTML>
 <!-- Footer -->
 <footer id="footer">
+
+
+	<a href="#banner" class="scrolly" >TOP</a>
 	<ul class="icons">
 		<li><a href="#" class="icon alt fa-twitter"><span
 				class="label">Twitter</span></a></li>
@@ -22,12 +25,4 @@
 		<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 	</ul>
 </footer>
-<script>
-$(document).ready(function(){
-		var message = "${requestScope.Message}";
-	if( message ){
-	alert(message);
-}
-					
-});
-</script>
+

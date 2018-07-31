@@ -13,7 +13,12 @@
 	<nav id="nav">
 		<ul>
 			<li><a href="./description">설명</a></li>
-			
+			<li>
+				<a href="#">프로젝트</a>
+				<ul id="nav-projectList">
+				</ul>
+			</li>
+							
 			<c:choose>
 				<c:when test="${empty sessionScope.email}">
 					<li><a href="./join">가입하기</a></li>
@@ -34,22 +39,23 @@
 			
 				<div class="nomember_alert">
 			
-					<c:if test="${!empty ResultMessage}">
-						<p style="color:white">${ResultMessage}</p>
-					</c:if>
-				
-					<a href="javascript:disablePopup('${url}')" class="button small"><span>확인</span></a>
+					<p id="msg" style="color:white"></p>
+			
+					<a href="javascript:disablePopup(getCookie('url'))" class="button small"><span>확인</span></a>
 				</div>
 		</div>
 </div>
 </body>
-
 <script>
+
 $(document).ready(function(){
-	 //< 팝업 메시지가 있다면 출력
-	 setPopup("${ResultMessage}");
+var cookieMsg = getCookie("resultMsg");
+var resultMsg = decodeURIComponent(cookieMsg).replace(/\+/g, ' ');
+ setPopup(resultMsg);
 });
+
 </script>
+
 </html>
 
 

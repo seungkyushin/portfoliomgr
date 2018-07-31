@@ -608,7 +608,11 @@ function disablePopup(url){
 
 		 $(".popup_booking_wrapper").css("display","none");
 		 
+		 document.cookie = 'resultMsg=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+		 
 		 if(url != ""){
+	
+			 document.cookie = 'url=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
 			 location.href = url;
 		 }	 
 }
@@ -617,6 +621,12 @@ function setPopup(ResultMsg){
 	if( ResultMsg == "")
 		return;
 	
+	 $('#msg').text(ResultMsg);
 	 $(".popup_booking_wrapper").css("display","block");
 }
+
+function getCookie(name) {
+	  var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+	  return value? value[2] : "";
+	};
 

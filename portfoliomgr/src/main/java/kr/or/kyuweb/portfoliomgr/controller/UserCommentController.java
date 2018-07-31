@@ -52,8 +52,8 @@ public class UserCommentController {
 		int reuslt = userCommentService.addUserComment(data,email,clientIp);
 
 		if( reuslt != 0 ) {
-			modelMap.addAttribute("url","./descriptionProject?id="+data.getProjectId());
-			modelMap.addAttribute("ResultMessage","덧글 남겨주셔서 감사합니다. 이전 페이지로 돌아갑니다.");
+			req.setAttribute("url","./descriptionProject?id="+data.getProjectId());
+			req.setAttribute("resultMsg","덧글 남겨주셔서 감사합니다. 이전 페이지로 돌아갑니다.");
 		}
 		
 		return "comment";

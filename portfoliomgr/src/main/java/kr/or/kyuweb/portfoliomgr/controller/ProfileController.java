@@ -1,8 +1,8 @@
 package kr.or.kyuweb.portfoliomgr.controller;
 
-import java.util.Date;
-
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +30,7 @@ public class ProfileController {
 	VisiterDao visiterDao;
 	
 	@GetMapping(path="/checkProfile")
-	public String checkProfile(HttpSession hSession, ModelMap modelMap) {
-		if( hSession != null ) {
-			String email = (String)hSession.getAttribute("email");
-			
-			if( email == null || "".equals(email) ) { 
-				modelMap.addAttribute("url","./login");
-				modelMap.addAttribute("ResultMessage","로그인 후 이용해주세요.");
-			}
-		}
-		
+	public String checkProfile(	) {
 		return "checkProfile";
 	}
 	
@@ -69,21 +60,23 @@ public class ProfileController {
 	@PostMapping(path="/modifyProfile")
 	public String modifyProfile(@ModelAttribute VisiterDto visiter,
 			HttpServletRequest req,
+			HttpServletResponse res,
 			RedirectAttributes redirectAttr,
 			ModelMap modelMap) {
-		
-		
+
 		
 		try {
 				visiterService.update(visiter, (String)req.getAttribute("clientIp"));
 				visiter = visiterService.getVisiter(visiter.getEmail());
 				
-				modelMap.addAttribute("visiter", visiter);	
+				modelMap.addAttribute("visiter", visiter);
+				req.setAttribute("resultMsg", "수정되었습니다.");
 		}catch( DataAccessException e) {
-			
-				modelMap.addAttribute("ResultMessage", "업데이트를 실패했습니다. 다시 시도해주세요");		
+			req.setAttribute("resultMsg", "수정에 실패했습니다.");
+			return "profile";
 		}
-		return "profile";
+
+		return "main";
 		
 	}
 	

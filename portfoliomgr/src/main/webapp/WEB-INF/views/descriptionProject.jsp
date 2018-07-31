@@ -89,7 +89,7 @@
 			            <div class="col-2 col-4-medium col-12-xsmall">
 								<c:choose>
 								    <c:when test="${empty sessionScope.email }">
-								        <a href="./login"><input type="button" class="button primary fit" value="로그인"></a>
+								        <a href="./login"><input type="button" class="button primary fit" value="프로젝트 열기"></a>
 								    </c:when>
 								    <c:otherwise>
 								         <a href="{{url}}" target="_blank"><input type="button" id="sendBtn" class="button primary fit" value="프로젝트 열기"></a>

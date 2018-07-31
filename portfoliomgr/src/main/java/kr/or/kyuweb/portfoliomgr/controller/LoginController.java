@@ -1,6 +1,9 @@
 package kr.or.kyuweb.portfoliomgr.controller;
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,15 +41,9 @@ public class LoginController {
 			ModelMap modelMap) {
 		
 		session.invalidate();
-		Cookie[] cookies = req.getCookies();
-		for(int i = 0 ; i<cookies.length; i++){            
-			cookies[i].setMaxAge(0);                        
-			res.addCookie(cookies[i]);     
-			}
-		
-		modelMap.addAttribute("ResultMessage", "성공적으로 로그아웃 되셨습니다!");
 
-		return "main";
+		req.setAttribute("resultMsg", "로그아웃 됬습니다");
+		return "redirect:main";
 	}
 	
 	
@@ -70,19 +67,16 @@ public class LoginController {
 
 			 
 			Cookie info = new Cookie("email", email);    // 쿠키를 생성
-			
 			info.setMaxAge(60*60*10);                                 // 쿠키의 유효기간
 			info.setPath("/");
-			res.addCookie(info);   
+			res.addCookie(info); 
 			
-			modelMap.addAttribute("ResultMessage","'" + visiter.getName() +"'님 반갑습니다!");
-			
+			req.setAttribute("resultMsg", visiter.getName()+"님 반갑습니다!");
 			return "main";
 
 		}else {
 			
 			redirectAttr.addFlashAttribute("errorMessage", "이메일이 없거나 비밀번호가 잘못 됬습니다.");
-
 			return "redirect:login";
 			
 		}
