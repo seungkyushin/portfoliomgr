@@ -9,5 +9,5 @@ public interface VisiterService {
 	public int delete(VisiterDto data, String ip);
 	public int update(VisiterDto data, String ip);
 	public VisiterDto checkLogin(String email, String password, String ip);
-	
+	public boolean checkPassword(String newPwd ,String originalPwd);
 }

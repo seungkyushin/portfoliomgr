@@ -31,8 +31,7 @@ public class JoinController {
 	public String addVisiter( @ModelAttribute VisiterDto visiter,
 			HttpServletRequest req,
 			ModelMap modelMap){
-		System.out.println("ViewPageController : /addVisiter");
-		
+
 		String clientIp = (String)req.getAttribute("clientIp");
 		
 		if("".equals(visiter.getOrganization()) == true)

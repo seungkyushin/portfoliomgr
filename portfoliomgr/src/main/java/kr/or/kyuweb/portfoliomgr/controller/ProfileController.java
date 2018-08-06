@@ -43,7 +43,7 @@ public class ProfileController {
 		String email = (String)hSession.getAttribute("email");
 		VisiterDto visiter = visiterService.getVisiter(email);
 		
-		if( visiter.getPassword().equals(password) == true ) {
+		if( visiterService.checkPassword( password,visiter.getPassword()) == true ) {
 			visiter.setPassword("");
 			modelMap.addAttribute("visiter", visiter);
 			return "profile";

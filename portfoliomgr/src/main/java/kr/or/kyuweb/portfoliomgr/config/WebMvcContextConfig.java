@@ -22,7 +22,6 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		System.out.println("리소스 핸들러");
 		registry.addResourceHandler("/assets/css/**").addResourceLocations("/assets/css/").setCachePeriod(31556926);
         registry.addResourceHandler("/assets/img/**").addResourceLocations("/assets/img/").setCachePeriod(31556926);
         registry.addResourceHandler("/assets//js/**").addResourceLocations("/assets/js/").setCachePeriod(31556926);
@@ -30,7 +29,6 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		System.out.println("뷰 컨드롤러");
 		registry.addViewController("/").setViewName("main");
 		registry.addViewController("/main").setViewName("main");
 	}
@@ -57,7 +55,6 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-
 		registry.addInterceptor(new AuthenticationInterceptor());
 	}
     

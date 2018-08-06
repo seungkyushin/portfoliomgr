@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.kyuweb.portfoliomgr.dao.VisiterDao;
 import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
+import kr.or.kyuweb.portfoliomgr.util.Encryption;
 
 @Service
 public class VisiterServiceImpl implements VisiterService{
@@ -25,11 +26,17 @@ public class VisiterServiceImpl implements VisiterService{
 	
 	public int add(VisiterDto data ,String ip) {
 		
-		DateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		data.setCreateDate(dateFormat.format(new Date()));
 		int result = 0;
-		
+
 		try {
+			
+				//< 패스워드 암호화 
+				String encryption = Encryption.SHA512(data.getPassword());
+				data.setPassword(encryption);
+				
+				DateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				data.setCreateDate(dateFormat.format(new Date()));
+								
 				result = visiterDao.insert(data);
 				logService.recordLog("info","방문자 가입 성공",data.getEmail(),ip);
 				
@@ -55,7 +62,7 @@ public class VisiterServiceImpl implements VisiterService{
 		
 		VisiterDto visiter = this.getVisiter(email);
 		
-		if(visiter != null && visiter.getPassword().equals(password) == true) {		
+		if(visiter != null && checkPassword(password, visiter.getPassword()) == true) {		
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			//< 마지막 로그인 갱신
@@ -84,13 +91,18 @@ public class VisiterServiceImpl implements VisiterService{
 	@Override
 	public int update(VisiterDto data, String ip) {
 		String email = data.getEmail();
-		String password = data.getPassword();
+		String password = Encryption.SHA512(data.getPassword());
 		String organization = data.getOrganization();
 
 		//< 로그
 		logService.recordLog("update", "정보 갱신 성공", email,ip);
 		
 		return visiterDao.updateInfo(email,password,organization);
+	}
+
+	@Override
+	public boolean checkPassword(String newPwd, String originalPwd) {
+		return originalPwd.equals(Encryption.SHA512(newPwd));
 	}
 
 }

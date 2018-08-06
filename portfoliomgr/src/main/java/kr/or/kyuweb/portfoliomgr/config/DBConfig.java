@@ -21,13 +21,11 @@ public class DBConfig implements TransactionManagementConfigurer{
 	
 	@Bean
 	public DataSource jdbcConnection() {
-		System.out.println("DBConfig : init");
 		BasicDataSource ds = new BasicDataSource();
 		ds.setDriverClassName(driverClassName);
 		ds.setUrl(url);
 		ds.setUsername(username);
 		ds.setPassword(password);
-
 		return ds;
 	}
 	

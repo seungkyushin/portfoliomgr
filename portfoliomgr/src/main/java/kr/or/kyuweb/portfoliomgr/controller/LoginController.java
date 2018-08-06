@@ -64,7 +64,6 @@ public class LoginController {
 			
 			session.setAttribute("email", email);
 			session.setMaxInactiveInterval(10*60); // 10분 유지
-
 			 
 			Cookie info = new Cookie("email", email);    // 쿠키를 생성
 			info.setMaxAge(60*60*10);                                 // 쿠키의 유효기간

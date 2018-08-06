@@ -24,12 +24,11 @@ public class ApiController {
 	
 	@Autowired
 	ProjectService projectService;
-
 	@Autowired
 	VisiterService visiterService;
-			
 	@Autowired
 	UserCommentService userCommentService;
+	
 	
 	@GetMapping(path="/project")
 	public Map<String, Object> getProjectList(@RequestParam(name="id") int id){		

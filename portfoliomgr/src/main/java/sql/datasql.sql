@@ -7,8 +7,8 @@ Use portfolio_db;
 
 create table visiter(id int primary key auto_increment,  
 name varchar(40) NOT NULL, 
-password varchar(20) NOT NULL, 
-email varchar(0) unique key NOT NULL, 
+password varchar(255) NOT NULL, 
+email varchar(30) unique key NOT NULL, 
 organization varchar(50) DEFAULT NULL, 
 create_date datetime NOT NULL, 
 last_login_date datetime  DEFAULT NULL 
