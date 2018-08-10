@@ -1,11 +1,15 @@
 package kr.or.kyuweb.portfoliomgr.dao;
 
+
+import static kr.or.kyuweb.portfoliomgr.sqlsrting.UserComment.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -19,15 +23,16 @@ import kr.or.kyuweb.portfoliomgr.dto.UserCommentDto;
 @Repository
 public class UserCommentDao {
 
+	@Autowired
 	private NamedParameterJdbcTemplate jdbc;
+	
 	private SimpleJdbcInsert insertAction;
 	private static final int LILIT = 4;
 	private RowMapper<UserCommentDto> rowMapper = new BeanPropertyRowMapper<>(UserCommentDto.class);
 	
 	public UserCommentDao(DataSource dataSource) {
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 		this.insertAction = new SimpleJdbcInsert(dataSource)
-				.withTableName("user_comment")
+				.withTableName(TABLE_NAME)
 				.usingGeneratedKeyColumns("id");
 		}
 	
@@ -36,13 +41,13 @@ public class UserCommentDao {
 		paramMap.put("id", id);
 		paramMap.put("start", start);
 		paramMap.put("limit", LILIT);
-		return jdbc.query("SELECT * FROM user_comment WHERE project_id=:id AND show_check='off' limit :start, :limit", paramMap, rowMapper);
+		return jdbc.query(SELECT_BY_PROJECT_ID, paramMap, rowMapper);
 	}
 	
 	public List<UserCommentDto> selectAllByProjectId(int id){
 		Map<String,Integer> paramMap = new HashMap<>();
 		paramMap.put("id", id);
-		return jdbc.query("SELECT * FROM user_comment WHERE project_id=:id", paramMap, rowMapper);
+		return jdbc.query(SELECT_ALL_BY_PROJECT_ID, paramMap, rowMapper);
 	}
 	
 	
@@ -51,13 +56,13 @@ public class UserCommentDao {
 		paramMap.put("id", id);
 		paramMap.put("start", start);
 		paramMap.put("limit", LILIT);
-		return jdbc.query("SELECT * FROM user_comment WHERE visiter_id=:id AND show_check='off' limit :start, :limit", paramMap, rowMapper);
+		return jdbc.query(SELECT_ALL_BY_VISITER_ID, paramMap, rowMapper);
 	}
 	
 	public int selectCountByPorjectId(int ProjectId){
 		Map<String,Integer> paramMap = new HashMap<>();
 		paramMap.put("ProjectId", ProjectId);
-		return jdbc.queryForObject("SELECT COUNT(*) FROM user_comment WHERE project_id=:ProjectId AND show_check='off'", paramMap, Integer.class);
+		return jdbc.queryForObject(SELECT_COUNT_BY_PROJECT_ID, paramMap, Integer.class);
 	}
 	
 	public int insert(UserCommentDto data) {

@@ -1,16 +1,9 @@
 package kr.or.kyuweb.portfoliomgr.controller;
 
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 
 @Controller
 public class DescriptionController {

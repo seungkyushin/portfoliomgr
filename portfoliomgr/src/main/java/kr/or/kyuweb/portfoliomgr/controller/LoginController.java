@@ -1,9 +1,6 @@
 package kr.or.kyuweb.portfoliomgr.controller;
 
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

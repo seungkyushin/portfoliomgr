@@ -8,6 +8,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.kyuweb.portfoliomgr.dao.VisiterDao;
 import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
@@ -23,7 +24,7 @@ public class VisiterServiceImpl implements VisiterService{
 	LogService logService;
 	
 	@Override
-	
+	@Transactional(readOnly=false)
 	public int add(VisiterDto data ,String ip) {
 		
 		int result = 0;

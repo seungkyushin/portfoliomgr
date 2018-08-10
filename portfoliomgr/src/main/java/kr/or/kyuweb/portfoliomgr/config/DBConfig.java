@@ -5,11 +5,11 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
-
 @Configuration
 @EnableTransactionManagement
 public class DBConfig implements TransactionManagementConfigurer{
@@ -29,6 +29,11 @@ public class DBConfig implements TransactionManagementConfigurer{
 		return ds;
 	}
 	
+	@Bean
+	public NamedParameterJdbcTemplate jdbcTemplate(DataSource dataSource) {
+		return new NamedParameterJdbcTemplate(dataSource);
+	}
+	
 	@Override
 	public PlatformTransactionManager annotationDrivenTransactionManager() {
 		return transactionManger();
@@ -37,9 +42,6 @@ public class DBConfig implements TransactionManagementConfigurer{
 	
 	@Bean
 	public PlatformTransactionManager transactionManger() {
-		System.out.println("DBConfig : transactionManger");
 		return new DataSourceTransactionManager(jdbcConnection());
 	}
-	
-
 }

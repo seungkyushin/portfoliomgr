@@ -4,14 +4,13 @@ drop database portfolio_db;
 Create database portfolio_db; 
 Use portfolio_db; 
 
-
 create table visiter(id int primary key auto_increment,  
 name varchar(40) NOT NULL, 
 password varchar(255) NOT NULL, 
 email varchar(30) unique key NOT NULL, 
-organization varchar(50) DEFAULT NULL, 
+organization varchar(50) DEFAULT 'NONE', 
 create_date datetime NOT NULL, 
-last_login_date datetime  DEFAULT NULL 
+last_login_date datetime  DEFAULT '0000-00-00 00:00:00' 
 ) DEFAULT CHARSET=utf8; 
 
 create table log(id int primary key auto_increment, 
@@ -19,7 +18,7 @@ create_date datetime NOT NULL,
 type varchar(50) NOT NULL, 
 description text NOT NULL, 
 client_ip varchar(50) NOT NULL, 
-visiter_email varchar(50) NOT NULL 
+visiter_email varchar(30) NOT NULL 
 ) DEFAULT CHARSET=utf8; 
 
 create table file_info(id int primary key auto_increment, 
@@ -42,7 +41,7 @@ create table user_comment(id int primary key auto_increment,
 content text NOT NULL, 
 score decimal(5,1)  NOT NULL, 
 type varchar(20) NOT NULL, 
-show_check varchar(20) NOT NULL, 
+show_check varchar(10) DEFAULT 'off', 
 create_date datetime  NOT NULL, 
 project_id int  NOT NULL, 
 visiter_id int  NOT NULL, 
