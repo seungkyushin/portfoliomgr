@@ -25,7 +25,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 			if(cookies != null){
 				
 				int mas = cookies.length;
-				for(int i=0; i<mas; i++){
+				for(int i=1; i<mas; i++){
 					System.out.println(cookies[i].getName() +":"+ cookies[i].getValue());
 					
 						

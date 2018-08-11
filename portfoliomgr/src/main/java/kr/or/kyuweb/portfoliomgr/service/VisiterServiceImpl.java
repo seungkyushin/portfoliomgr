@@ -58,7 +58,7 @@ public class VisiterServiceImpl implements VisiterService{
 
 	@Override
 	public VisiterDto checkLogin(String email,String password ,String ip) {
-		
+		System.out.println("로그인 시도");
 		logService.recordLog("info", "로그인 시도 ", email,ip);
 		
 		VisiterDto visiter = this.getVisiter(email);
@@ -70,11 +70,11 @@ public class VisiterServiceImpl implements VisiterService{
 			visiterDao.updateLastLoginTime(visiter.getEmail(), dateFormat.format(new Date()));
 			//< 로그
 			logService.recordLog("info", "로그인 성공", visiter.getEmail(),ip);
-			
+			System.out.println("로그인 성공");
 			return visiter;
 			
 		}
-		
+		System.out.println("로그인 실패");
 		
 		return null;
 	}
