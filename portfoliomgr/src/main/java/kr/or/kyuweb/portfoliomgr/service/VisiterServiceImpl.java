@@ -17,38 +17,37 @@ import kr.or.kyuweb.portfoliomgr.util.Encryption;
 @Service
 public class VisiterServiceImpl implements VisiterService{
 	
+	
 	@Autowired
 	VisiterDao visiterDao; 
 
 	@Autowired
 	LogService logService;
 	
+	@Autowired 
+	DateFormat  dateFormat;
+	
 	@Override
 	@Transactional(readOnly=false)
 	public int add(VisiterDto data ,String ip) {
-		
-		int result = 0;
-
 		try {
-			
 				//< 패스워드 암호화 
 				String encryption = Encryption.SHA512(data.getPassword());
 				data.setPassword(encryption);
-				
-				DateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 				data.setCreateDate(dateFormat.format(new Date()));
-								
-				result = visiterDao.insert(data);
+			
+				visiterDao.insert(data);
 				logService.recordLog("info","방문자 가입 성공",data.getEmail(),ip);
 				
+		}catch(DuplicateKeyException e) {
+			logService.recordLog("error",e.getMessage(),data.getEmail(),ip);
+			return ERROR_DUPLICATE_FOR_EMAIL;
 		}catch(SQLException e){
 			logService.recordLog("error",e.getSQLState() + ":" + e.getMessage(),data.getEmail(),ip);
-		}catch(DuplicateKeyException e) {
-			result = -1;
-			logService.recordLog("error",e.getMessage(),data.getEmail(),ip);
+			return FAILED;
 		}
-
-		return result;
+		return SUCCESS;
 	}
 
 	@Override
@@ -81,28 +80,51 @@ public class VisiterServiceImpl implements VisiterService{
 
 	@Override
 	public VisiterDto getVisiter(String email) {
-		return visiterDao.selectByEmail(email);
+		
+		if( email != null || email.isEmpty() ) {
+			if(visiterDao != null )
+				return visiterDao.selectByEmail(email);
+		}
+		
+		return null;
 	}
 
 	@Override
 	public VisiterDto getVisiter(int id) {
-		return visiterDao.selectById(id);
+		if( id != 0 ) {
+			if(visiterDao != null )
+				return visiterDao.selectById(id);
+		}
+		
+		return null;
 	}
 
 	@Override
 	public int update(VisiterDto data, String ip) {
-		String email = data.getEmail();
-		String password = Encryption.SHA512(data.getPassword());
-		String organization = data.getOrganization();
+		
+		if( data == null || ip == null || ip.isEmpty() ) {
+			return FAILED;
+		}
 
 		//< 로그
-		logService.recordLog("update", "정보 갱신 성공", email,ip);
+		//logService.recordLog("update", "정보 갱신 성공", email,ip);
 		
-		return visiterDao.updateInfo(email,password,organization);
+		try {
+			
+			 visiterDao.updateInfo(data.getEmail(),
+					 Encryption.SHA512(data.getPassword()),
+					 data.getOrganization());
+			
+			 return SUCCESS;
+		} catch (SQLException e) {
+			 logService.recordLog("error",e.getSQLState() + ":" + e.getMessage(),data.getEmail(),ip);
+			 return FAILED;
+		}
 	}
 
 	@Override
 	public boolean checkPassword(String newPwd, String originalPwd) {
+	
 		return originalPwd.equals(Encryption.SHA512(newPwd));
 	}
 

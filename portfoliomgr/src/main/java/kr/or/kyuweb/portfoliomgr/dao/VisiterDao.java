@@ -1,6 +1,10 @@
 package kr.or.kyuweb.portfoliomgr.dao;
 
-import static kr.or.kyuweb.portfoliomgr.sqlsrting.Visiter.*;
+import static kr.or.kyuweb.portfoliomgr.sqlsrting.Visiter.SELECT_ALL;
+import static kr.or.kyuweb.portfoliomgr.sqlsrting.Visiter.SELECT_BY_EMAIL;
+import static kr.or.kyuweb.portfoliomgr.sqlsrting.Visiter.SELECT_BY_ID;
+import static kr.or.kyuweb.portfoliomgr.sqlsrting.Visiter.UPDATE_INFO_BY_EMAIL;
+import static kr.or.kyuweb.portfoliomgr.sqlsrting.Visiter.UPDATE_LAST_LOGIN_TIME;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -96,7 +100,7 @@ public class VisiterDao {
 		 return jdbc.update(UPDATE_LAST_LOGIN_TIME, paramMap);
 	 }
 	 
-	 public int updateInfo(String email, String password, String organization) {
+	 public int updateInfo(String email, String password, String organization) throws SQLException {
 		 
 		 Map<String,String> paramMap = new HashMap<>();
 		 paramMap.put("email", email);

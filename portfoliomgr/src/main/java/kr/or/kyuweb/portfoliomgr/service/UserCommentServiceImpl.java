@@ -24,6 +24,9 @@ public class UserCommentServiceImpl implements UserCommentService{
 	@Autowired
 	VisiterService visiterService;
 	
+	@Autowired 
+	DateFormat  dateFormat;
+	
 	@Override
 	public List<UserCommentDto> getUserCommentByProjectId(int id, int start) {
 		return userCommentDao.selectByProjectId(id,start);
@@ -40,13 +43,11 @@ public class UserCommentServiceImpl implements UserCommentService{
 		VisiterDto visiter = visiterService.getVisiter(email);
 		data.setVisiterId(visiter.getId());
 		
-		System.out.println(data.getShowCheck());
-		
+
 		if(data.getShowCheck() == null ){
 			data.setShowCheck("off");
 		}
-		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 		data.setCreateDate(dateFormat.format(new Date()));
 		
 		return userCommentDao.insert(data);

@@ -1,5 +1,8 @@
 package kr.or.kyuweb.portfoliomgr.config;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -43,5 +46,10 @@ public class DBConfig implements TransactionManagementConfigurer{
 	@Bean
 	public PlatformTransactionManager transactionManger() {
 		return new DataSourceTransactionManager(jdbcConnection());
+	}
+	
+	@Bean
+	public DateFormat dataFormat() {
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	}
 }
