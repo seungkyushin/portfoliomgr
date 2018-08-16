@@ -20,6 +20,7 @@ import kr.or.kyuweb.portfoliomgr.interceptor.AuthenticationInterceptor;
 @ComponentScan(basePackages = { "kr.or.kyuweb.portfoliomgr.controller" })
 public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 
+	//< Resource의 요청이 들어오면 ResourceHandler에게 설정된 경로부터 찾으라고 알려준다.
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/assets/css/**").addResourceLocations("/assets/css/").setCachePeriod(31556926);
@@ -27,17 +28,32 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
         registry.addResourceHandler("/assets//js/**").addResourceLocations("/assets/js/").setCachePeriod(31556926);
 	}
 
+	//<
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("main");
 		registry.addViewController("/main").setViewName("main");
 	}
 
-	   @Override
-	    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-	    	configurer.enable();
-	    }
-	
+	/*
+	 DefaultServletHandler를 사용하기위해 오버라이딩 한다.
+	 사용해야하는 이유는  DispatcherServlet의 url-parren을 '/'로하여 모든 요청을 처리하도록 설정했기 때문에
+	 CSS, JavaScript, image등의 요청도 DispatcherServlet이 받아 작업하게 된다.
+	 당연히 리소스에 대한 URL처리는 해주고 있지 않기 때문에 문제가 발생된다. 
+	 그리하여 이런 정적인 리소스를 처리하기 위해서 DefaultServlet을 사용 한다.
+	 아래의 메소드처럼 DefaultServletHandling을 활성화하게 되면 DispatcherServlet이 처리 못하는
+	 DefaultServlet을 알아서 처리하게 된다.(비 활성화시 리소스관련 url응답 실패)
+	 */
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+	  	configurer.enable();
+	}
+	 
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new AuthenticationInterceptor());
+	}
+	    
 	@Bean
 	public InternalResourceViewResolver getInternalResourceViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -53,10 +69,4 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
         return multipartResolver;
     }
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new AuthenticationInterceptor());
-	}
-    
-    
 }

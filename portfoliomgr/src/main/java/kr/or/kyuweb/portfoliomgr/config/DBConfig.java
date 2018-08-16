@@ -22,6 +22,16 @@ public class DBConfig implements TransactionManagementConfigurer{
 	private String username = "root";
 	private String password = "Dkagh1234.";
 	
+	
+	//< XML에 설정하지 않고 TransactionManagementConfigurer Interface를 구현하여 TransactionManager를 설정한다.
+	//< TransactionManager는 Bean으로 등록해야하며 DataSourceTransactionManager를 사용
+	@Override
+	public PlatformTransactionManager annotationDrivenTransactionManager() {
+		return transactionManger();
+	}
+	
+	
+	//< DB 관련 Beans
 	@Bean
 	public DataSource jdbcConnection() {
 		BasicDataSource ds = new BasicDataSource();
@@ -36,12 +46,6 @@ public class DBConfig implements TransactionManagementConfigurer{
 	public NamedParameterJdbcTemplate jdbcTemplate(DataSource dataSource) {
 		return new NamedParameterJdbcTemplate(dataSource);
 	}
-	
-	@Override
-	public PlatformTransactionManager annotationDrivenTransactionManager() {
-		return transactionManger();
-	}
-	
 	
 	@Bean
 	public PlatformTransactionManager transactionManger() {
