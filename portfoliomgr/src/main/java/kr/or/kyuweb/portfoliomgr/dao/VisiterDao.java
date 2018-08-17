@@ -79,7 +79,6 @@ public class VisiterDao {
 	 
 	 
 	 public int insert(VisiterDto data) throws SQLException, DuplicateKeyException{
-		 
 		 SqlParameterSource params = new BeanPropertySqlParameterSource(data);
 			return insertAction.executeAndReturnKey(params).intValue();
 	 }

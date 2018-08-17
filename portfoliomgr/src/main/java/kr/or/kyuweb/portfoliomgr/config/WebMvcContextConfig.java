@@ -28,6 +28,8 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
         registry.addResourceHandler("/assets//js/**").addResourceLocations("/assets/js/").setCachePeriod(31556926);
 	}
 
+
+	
 	//<
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
@@ -54,6 +56,7 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 		registry.addInterceptor(new AuthenticationInterceptor());
 	}
 	    
+	//
 	@Bean
 	public InternalResourceViewResolver getInternalResourceViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();

@@ -1,6 +1,5 @@
 package kr.or.kyuweb.portfoliomgr.aop;
 
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.JoinPoint;
@@ -16,8 +15,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.kyuweb.portfoliomgr.service.LogService;
 
-
-
 @Component
 @Aspect
 public class LogAspect {
@@ -26,6 +23,7 @@ public class LogAspect {
 	LogService logService;
 	
 	@Around("execution(* checkLogin(..))")
+	
 	public Object logPrint(ProceedingJoinPoint pjp) throws Throwable {
 		System.out.println(pjp.getSignature().getName() + " around" );
 

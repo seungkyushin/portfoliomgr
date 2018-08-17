@@ -1,9 +1,12 @@
 package kr.or.kyuweb.portfoliomgr.controller;
 
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,24 +37,22 @@ public class JoinController {
 		
 		if("".equals(visiter.getOrganization()) == true)
 			visiter.setOrganization("없음");
-		
-		int result = visiterService.add(visiter,clientIp);
-		
-		if( result > visiterService.SUCCESS) {
-			//< 생성 성공
-			req.setAttribute("resultMsg","성공적으로 가입되었습니다!");
 
-			return "main";
-		}else{
-			if( result == visiterService.ERROR_DUPLICATE_FOR_EMAIL) 
-				req.setAttribute("resultMsg", "동일한 Email이 존재합니다.");
-			else if( result == visiterService.FAILED)
-				req.setAttribute("resultMsg", "가입에 실패하였습니다.");
-			
+		try {
+			visiterService.add(visiter,clientIp);
+		} catch (DuplicateKeyException e) {
+			e.printStackTrace();
+			req.setAttribute("resultMsg", "동일한 Email이 존재합니다.");
 			return "join";
-			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "join";
 		}
-
+		
+		
+		req.setAttribute("resultMsg","성공적으로 가입되었습니다!");
+		return "main";
+		
 	}
 	
 	 

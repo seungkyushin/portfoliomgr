@@ -15,6 +15,7 @@ import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 import kr.or.kyuweb.portfoliomgr.util.Encryption;
 
 @Service
+@Transactional(readOnly=false)
 public class VisiterServiceImpl implements VisiterService{
 	
 	
@@ -28,26 +29,18 @@ public class VisiterServiceImpl implements VisiterService{
 	DateFormat  dateFormat;
 	
 	@Override
-	@Transactional(readOnly=false)
-	public int add(VisiterDto data ,String ip) {
-		try {
-				//< 패스워드 암호화 
-				String encryption = Encryption.SHA512(data.getPassword());
-				data.setPassword(encryption);
-
-				data.setCreateDate(dateFormat.format(new Date()));
+	public void add(VisiterDto data ,String ip) throws SQLException, DuplicateKeyException {
+		
+		//< 패스워드 암호화 
+		String encryption = Encryption.SHA512(data.getPassword());
+		data.setPassword(encryption);
+		data.setCreateDate(dateFormat.format(new Date()));
 			
-				visiterDao.insert(data);
-				logService.recordLog("info","방문자 가입 성공",data.getEmail(),ip);
+		logService.recordLog("test","방문자 가입 전 로그",data.getEmail(),ip);
+		
+		visiterDao.insert(data);
 				
-		}catch(DuplicateKeyException e) {
-			logService.recordLog("error",e.getMessage(),data.getEmail(),ip);
-			return ERROR_DUPLICATE_FOR_EMAIL;
-		}catch(SQLException e){
-			logService.recordLog("error",e.getSQLState() + ":" + e.getMessage(),data.getEmail(),ip);
-			return FAILED;
-		}
-		return SUCCESS;
+		logService.recordLog("info","방문자 가입 성공",data.getEmail(),ip);
 	}
 
 	@Override

@@ -1,5 +1,9 @@
 package kr.or.kyuweb.portfoliomgr.service;
 
+import java.sql.SQLException;
+
+import org.springframework.dao.DuplicateKeyException;
+
 import kr.or.kyuweb.portfoliomgr.dto.VisiterDto;
 public interface VisiterService {
 
@@ -9,7 +13,7 @@ public interface VisiterService {
 	
 	public VisiterDto getVisiter(String email);
 	public VisiterDto getVisiter(int id);
-	public int add(VisiterDto data,String ip);
+	public void add(VisiterDto data,String ip) throws SQLException, DuplicateKeyException;
 	public int delete(VisiterDto data, String ip);
 	public int update(VisiterDto data, String ip);
 	public VisiterDto checkLogin(String email, String password, String ip);
